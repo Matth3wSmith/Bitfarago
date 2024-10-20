@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="hu">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,29 +9,62 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
 </head>
-<body >
+
+<body>
     <div>
         <canvas id="jatek"></canvas>
     </div>
     <div>
-        <div class="allomas"><img src="./muhelyek/muhelyZold.png" alt="" id="allomasZold"></div>
-        <div class="allomas"> <img src="./muhelyek/muhelyKek.png" alt="" id="allomasKek"></div>
-        <div class="allomas"><img src="./muhelyek/muhelyNarancs.png" alt="" id="allomasNarancs"></div>
+        <div class="allomas"><img src="./muhelyek/muhelyZold.png" onclick=zoldCheck() alt="" id="allomasZold"></div>
+        <div class="allomas"> <img src="./muhelyek/muhelyKek.png" onclick=kekCheck() alt="" id="allomasKek"></div>
+        <div class="allomas"><img src="./muhelyek/muhelyNarancs.png" onclick=narancsCheck() alt="" id="allomasNarancs">
+        </div>
     </div>
     <script>
-        var c = document.getElementById("jatek"); 
-        var ctx = c.getContext("2d"); 
-        var cavasRect = c.getBoundingClientRect(); 
-        c.addEventListener('click', function(event){
+        var c = document.getElementById("jatek");
+        var ctx = c.getContext("2d");
+        var cavasRect = c.getBoundingClientRect();
+        var KekOn = false;
+        var narancsOn = false;
+        var zoldOn = false;
+        c.addEventListener('click', function (event) {
             let x = event.offsetX;
             let y = event.offsetY;
-            console.log(x,y)
-            img=document.getElementById("allomasZold");
-            ctx.drawImage(img,x,y);
-        }, false); 
+            console.log(x, y)
+            if (zoldOn == true) {
+                var img = document.getElementById("allomasZold");
+            }
+            if (narancsOn == true) {
+                var img = document.getElementById("allomasNarancs")
+            }
+            if (KekOn == true) {
+                var img = document.getElementById("allomasKek")
+                console.log("kek allomas")
+            }
+            ctx.drawImage(img, -200, -100, );
+        }, false);
         /*var xPos = event.clientX - cavasRect.left; 
         var yPos = event.clientY - cavasRect.top; 
         console.log(xPos,yPos)*/
+        function kekCheck() {
+            KekOn = true;
+            zoldOn = false;
+            narancsOn = false;
+            console.log(KekOn)
+        }
+        function narancsCheck() {
+            KekOn = false;
+            zoldOn = false;
+            narancsOn = true;
+        }
+        function zoldCheck() {
+            KekOn = false;
+            zoldOn = true;
+            narancsOn = false;
+        }
+
+
     </script>
 </body>
+
 </html>
