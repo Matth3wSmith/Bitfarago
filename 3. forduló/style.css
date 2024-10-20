@@ -1,0 +1,16 @@
+canvas{
+    border: 5px black solid;
+    width:900px;
+    height:900px;
+}
+.allomas{
+    display: inline;
+    margin-left: 100px;
+    background-color: green;
+    border-radius: 5px;
+}
+
+img{
+    width: 10%;
+    height: 10%;
+}

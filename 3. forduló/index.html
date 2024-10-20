@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simcity</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body >
+    <div>
+        <canvas id="jatek"></canvas>
+    </div>
+    <div>
+        <div class="allomas"><img src="./muhelyek/muhelyZold.png" alt="" id="allomasZold"></div>
+        <div class="allomas"> <img src="./muhelyek/muhelyKek.png" alt="" id="allomasKek"></div>
+        <div class="allomas"><img src="./muhelyek/muhelyNarancs.png" alt="" id="allomasNarancs"></div>
+    </div>
+    <script>
+        var c = document.getElementById("jatek"); 
+        var ctx = c.getContext("2d"); 
+        var cavasRect = c.getBoundingClientRect(); 
+        c.addEventListener('click', function(event){
+            let x = event.offsetX;
+            let y = event.offsetY;
+            console.log(x,y)
+            img=document.getElementById("allomasZold");
+            ctx.drawImage(img,x,y);
+        }, false); 
+        /*var xPos = event.clientX - cavasRect.left; 
+        var yPos = event.clientY - cavasRect.top; 
+        console.log(xPos,yPos)*/
+    </script>
+</body>
+</html>

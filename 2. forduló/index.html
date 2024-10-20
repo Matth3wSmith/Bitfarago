@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<body>
+    <table id="puzzle"></table>
+    <script>
+        var nrow = 5; 
+        var ncell = 5; 
+        var tt  = new Array(nrow); 
+        var newrow; 
+        
+        for(var i=0;i<nrow;i++){ 
+            newrow=document.getElementById("puzzle").insertRow(i); 
+            tt[i] = new Array(ncell); 
+            for(var j=0;j<ncell;j++){ 
+                tt[i][j]=newrow.insertCell(j); 
+                tt[i][j].id=i*ncell+j; 
+                tt[i][j].onclick=function(){mystep(this);}; 
+                tt[i][j].style.width="50px"; 
+                tt[i][j].style.height="50px"; 
+                tt[i][j].style.color="#fcfcfc"; 
+                tt[i][j].style.background="#ff3333"; 
+                tt[i][j].innerHTML=parseInt(tt[i][j].id)+1; 
+                // A JS 0-tol szamolja a tombelemeket, de a puzzle 1-tol! 
+            } 
+        } 
+    </script>
+</body>
+</html>
