@@ -1,8 +1,7 @@
-canvas{
-    border: 5px black solid;
-    width:900px;
-    height:900px;
+.selected{
+    background-color: green;
 }
+
 .allomas{
     display: inline;
     margin-left: 100px;
