@@ -5,23 +5,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simcity</title>
-
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
-    
-    <canvas id="jatek"></canvas>
-    
+<body id="body">
     <div>
-        <div class="allomas"><img src="./muhelyek/muhelyZold.png" onclick=zoldCheck(this) alt="" id="allomasZold"></div>
-        <div class="allomas"> <img src="./muhelyek/muhelyKek.png" onclick=kekCheck(this) alt="" id="allomasKek"></div>
-        <div class="allomas"><img src="./muhelyek/muhelyNarancs.png" onclick=narancsCheck(this) alt="" id="allomasNarancs">
+        <img id="elmuKep" src="./muhelyek/warehouse.png">
+        <h1 id="elmu">Elektromos Művek</h1>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 tabla">
+                <canvas id="jatek"></canvas>
+                <div id="keret">
+                    <div class="allomas"><img src="./muhelyek/muhelyZold.png" onclick=zoldCheck(this) alt="" id="allomasZold"></div>
+                    <div class="allomas"> <img src="./muhelyek/muhelyKek.png" onclick=kekCheck(this) alt="" id="allomasKek"></div>
+                    <div class="allomas"><img src="./muhelyek/muhelyNarancs.png" onclick=narancsCheck(this) alt="" id="allomasNarancs"></div>
+                </div>
+            </div>
         </div>
     </div>
-
-    
     <script src="script.js"></script>
-</body>
-
 </html>
