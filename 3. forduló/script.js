@@ -10,6 +10,8 @@ class Muhely{
 
         this.width=width*this.arany;
         this.height=height*this.arany;
+
+        this.eredetiRadius=150
         this.radius=150*this.arany;
 
 
@@ -92,18 +94,16 @@ function resizeCanvas() {
     
     c.width = c.offsetWidth;
     c.height = c.offsetHeight;
-    const scaleX = canvas.width / eredetiCanvasWidth;
-    const scaleY = canvas.height / eredetiCanvasHeight;
-
-    if (arany!=c.width/c.height){
-        arany=c.width/c.height
-        console.log(arany)
-        muhelyek.forEach(muhely => {
-            muhely.width*=arany;
-            muhely.height*=arany;
-            muhely.draw(ctx)
-        })
-    }
+    /*const scaleX = c.width / eredetiCanvasWidth;
+    const scaleY = c.height / eredetiCanvasHeight;
+    console.log(scaleX,scaleY)*/
+    let arany=c.width/c.height
+    muhelyek.forEach(muhely => {
+        muhely.width = muhely.eredetiWidth * arany;
+        muhely.height = muhely.eredetiHeight * arany;
+        muhely.draw(ctx)
+    })
+    
     // Ha szükséges, itt újrarajzolhatod a canvas tartalmát, mivel méretezéskor a rajz eltűnik
     // draw(); // Ezt a függvényt hozd létre a rajzolási tartalom megjelenítéséhez
 }
