@@ -2,9 +2,10 @@ class Muhely{
     constructor(x,y,img,width,height){
         this.xPos=x;
         this.yPos=y;
+        this.arany=c.width/c.height
         this.img=img;
-        this.width=width;
-        this.height=height;
+        this.width=width/this.arany;
+        this.height=height/this.arany;
         this.radius=150;
 
 
@@ -23,6 +24,22 @@ class Muhely{
         context.fill();
         context.stroke();
     }
+    
+    //mozgatás
+    mozgas(context,event){
+        console.log("Mozgatott műhely:",this)
+        this.xPos=event.offsetX;
+        this.yPos=event.offsetY;
+        console.log(event.offsetX,event.offsetY)
+        //Minden elem törlése a canvasról
+        torles(context)
+        //Újrarajzolás
+        muhelyek.forEach(muhely => {
+            muhely.draw(context)
+        })
+        console.log(muhelyek)
+
+        }
 }
 
 class Telepules{
@@ -39,24 +56,38 @@ class Telepules{
     }
 }
 
-/*function init(){
-    var c = document.getElementById("jatek"); 
-    var ctx = c.getContext("2d"); 
-    var cavasRect = c.getBoundingClientRect();
-    c.addEventListener('click', function(event){
-        var x = event.clientX; 
-        var y = event.clientY; 
-        console.log(x,y);
-        let img=document.getElementById("allomasKek");
-        ctx.drawImage(img, x, y,10,10);
-    });
-}*/
+function kekCheck(img) {
+    kekOn = true;
+    zoldOn = false;
+    narancsOn = false;
+    img.classList.add("selected");
+    console.log(kekOn)
+}
+function narancsCheck(img) {
+    kekOn = false;
+    zoldOn = false;
+    narancsOn = true;
+    img.classList.add("selected");
+    
+    console.log(narancsOn)
+}
+function zoldCheck(img) {
+    kekOn = false;
+    zoldOn = true;
+    narancsOn = false;
+    img.classList.add("selected");
+    console.log(zoldOn)
+}
 
-var c = document.getElementById("jatek");
-var ctx = c.getContext("2d");
+function torles(context){
+    context.clearRect(0, 0, c.width, c.height);
+}
 
-var windowHeight=window.innerHeight-300;
-var windowWidth=window.innerWidth-300;
+const c = document.getElementById("jatek");
+const ctx = c.getContext("2d");
+
+const windowHeight=window.innerHeight-300;
+const windowWidth=window.innerWidth-300;
 
 c.style.border="1px black solid"
 c.width=windowWidth;
@@ -65,15 +96,52 @@ c.height=windowHeight;
 //var cavasRect = c.getBoundingClientRect();
 
 var muhelyek=[];
-
+var mouseDown=false;
 var kekOn = false;
 var narancsOn = false;
 var zoldOn = false;
 
-c.addEventListener('click', function (event) {
+var mozgatott;
+c.addEventListener('mousedown',function (event){
+    /*const rect = c.getBoundingClientRect();
+    const scaleX = c.width / rect.width;    // Skála a szélességhez
+    const scaleY = c.height / rect.height;  // Skála a magassághoz
+
+    // Arányosított koordináták számítása
+    const x = (event.clientX - rect.left) * scaleX;
+    const y = (event.clientY - rect.top) * scaleY;
+    */
     let x = event.offsetX;
     let y = event.offsetY;
-    console.log(x, y)
+    console.log("Egérlenyomás koordinátái:"+x+" "+y)
+    muhelyek.forEach(muhely => {
+        //console.log(muhely)
+        if (x >= muhely.xPos - muhely.width/2 && x <= muhely.xPos + muhely.width/2 &&
+            y >= muhely.yPos - muhely.height && y <= muhely.yPos) {
+            console.log('Erre a képre kattintottál:', muhely.img);
+            //Egérmozgás lekövetésének engedélyezése, miután megvan a kattintott műhely
+            mouseDown=true;
+            mozgatott=muhely
+        }
+    })
+})
+
+//Műhely mozgatása, egér koordinátáit átadja a
+c.addEventListener("mousemove",(event)=>{
+    if (mouseDown){
+        mozgatott.mozgas(ctx,event)
+    }
+})
+//Ha felengedi az egeret a műhely mozgatása is álljon meg
+c.addEventListener("mouseup",function (event){
+    mouseDown=false;
+})
+
+c.addEventListener('click', function (event) {
+    //console.log(event)
+    let x = event.offsetX;
+    let y = event.offsetY;
+
     if (zoldOn == true) {
         let img = document.getElementById("allomasZold");
         img.classList.remove("selected");
@@ -103,26 +171,4 @@ c.addEventListener('click', function (event) {
 /*var xPos = event.clientX - cavasRect.left; 
 var yPos = event.clientY - cavasRect.top; 
 console.log(xPos,yPos)*/
-function kekCheck(img) {
-    kekOn = true;
-    zoldOn = false;
-    narancsOn = false;
-    img.classList.add("selected");
-    console.log(kekOn)
-}
-function narancsCheck(img) {
-    kekOn = false;
-    zoldOn = false;
-    narancsOn = true;
-    img.classList.add("selected");
-    
-    console.log(narancsOn)
-}
-function zoldCheck(img) {
-    kekOn = false;
-    zoldOn = true;
-    narancsOn = false;
-    img.classList.add("selected");
-    console.log(zoldOn)
-}
 
