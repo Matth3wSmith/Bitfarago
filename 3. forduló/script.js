@@ -4,9 +4,13 @@ class Muhely{
         this.yPos=y;
         this.arany=c.width/c.height
         this.img=img;
-        this.width=width/this.arany;
-        this.height=height/this.arany;
-        this.radius=150;
+        
+        this.eredetiWidth=width;
+        this.eredetiHeight=height;
+
+        this.width=width*this.arany;
+        this.height=height*this.arany;
+        this.radius=150*this.arany;
 
 
     }
@@ -82,26 +86,93 @@ function zoldCheck(img) {
 function torles(context){
     context.clearRect(0, 0, c.width, c.height);
 }
+// Méret beállítása a szülő elem méretéhez képest
+function resizeCanvas() {
+    // Canvas belső felbontásának igazítása a szülő méretéhez
+    
+    c.width = c.offsetWidth;
+    c.height = c.offsetHeight;
+    const scaleX = canvas.width / eredetiCanvasWidth;
+    const scaleY = canvas.height / eredetiCanvasHeight;
+
+    if (arany!=c.width/c.height){
+        arany=c.width/c.height
+        console.log(arany)
+        muhelyek.forEach(muhely => {
+            muhely.width*=arany;
+            muhely.height*=arany;
+            muhely.draw(ctx)
+        })
+    }
+    // Ha szükséges, itt újrarajzolhatod a canvas tartalmát, mivel méretezéskor a rajz eltűnik
+    // draw(); // Ezt a függvényt hozd létre a rajzolási tartalom megjelenítéséhez
+}
 
 const c = document.getElementById("jatek");
 const ctx = c.getContext("2d");
 
-const windowHeight=window.innerHeight-300;
-const windowWidth=window.innerWidth-300;
+const windowHeight=window.innerHeight;
+const windowWidth=window.innerWidth;
 
 c.style.border="1px black solid"
-c.width=windowWidth;
-c.height=windowHeight;
-
-//var cavasRect = c.getBoundingClientRect();
+const eredetiCanvasWidth=c.width;
+const eredetiCanvasHeight=c.height;
 
 var muhelyek=[];
 var mouseDown=false;
 var kekOn = false;
 var narancsOn = false;
 var zoldOn = false;
-
+var arany
 var mozgatott;
+/*c.width=windowWidth-700;
+c.height=windowHeight-300;*/
+
+// Az ablak méretezésekor automatikus canvas átméretezés
+window.addEventListener('resize', resizeCanvas);
+
+// Kezdeti méretbeállítás betöltéskor
+resizeCanvas();
+
+//var cavasRect = c.getBoundingClientRect();
+
+
+//Mozgatható terület vaan mit javítani rajta
+/*
+const contentWidth = 2000;   // Tartalom szélessége
+const contentHeight = 1500;  // Tartalom magassága
+let offsetX = 0;
+let offsetY = 0;
+// Görgetési esemény figyelése
+c.addEventListener('wheel', (event) => {
+    
+
+    offsetX += event.deltaX;
+    offsetY += event.deltaY;
+
+    // Korlátozzuk az eltolást a tartalom méretére
+    offsetX = Math.max(0, Math.min(offsetX, contentWidth - c.width));
+    offsetY = Math.max(0, Math.min(offsetY, contentHeight - c.height));
+
+    drawContent();
+});
+
+// Tartalom kirajzolása az eltolás figyelembevételével
+function drawContent() {
+    ctx.clearRect(0, 0, c.width, c.height); // Canvas törlése
+
+    // Tartalom kirajzolása az eltolás figyelembevételével
+    ctx.save();
+    ctx.translate(-offsetX, -offsetY); // Eltolás alkalmazása
+    // Ide jön a tartalom rajzolása
+    ctx.fillRect(100, 100, 400, 400); // Példa: egy négyzet rajzolása
+    ctx.restore();
+}
+
+// Kezdeti rajzolás
+drawContent();
+*/
+
 c.addEventListener('mousedown',function (event){
     /*const rect = c.getBoundingClientRect();
     const scaleX = c.width / rect.width;    // Skála a szélességhez
@@ -153,7 +224,7 @@ c.addEventListener('click', function (event) {
     if (narancsOn == true) {
         let img = document.getElementById("allomasNarancs")
         img.classList.remove("selected");
-        let muhely = new Muhely(x,y,img,200,200);
+        let muhely = new Muhely(x,y,img,100,100);
         muhelyek.push(muhely)
         muhely.draw(ctx);
         narancsOn=false;
@@ -161,7 +232,7 @@ c.addEventListener('click', function (event) {
     if (kekOn == true) {
         let img = document.getElementById("allomasKek")
         img.classList.remove("selected");
-        let muhely = new Muhely(x,y,img,200,200);
+        let muhely = new Muhely(x,y,img,100,100);
         muhelyek.push(muhely)
         muhely.draw(ctx);
         kekOn=false;
