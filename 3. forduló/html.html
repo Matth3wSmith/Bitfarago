@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="400" style="border: 1px solid black;"></canvas>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Menü állapotok
+        let isMenuOpen = false;
+        let isAnimating = false;
+
+        // Menü paraméterek
+        const menuMaxWidth = 200;
+        const menuHeight = 300;
+        const menuX = 10;
+        const menuY = 50;
+        let menuCurrentWidth = 0; // Az aktuális szélesség, amelyet animálunk
+
+        // Menü gomb paraméterek
+        const buttonX = 10;
+        const buttonY = 10;
+        const buttonWidth = 80;
+        const buttonHeight = 30;
+
+        // Menü megjelenítése a jelenlegi szélességgel
+        function drawMenu() {
+            ctx.fillStyle = 'lightgrey';
+            ctx.fillRect(menuX, menuY, menuCurrentWidth, menuHeight);
+
+            // Menü opciók
+            if (menuCurrentWidth === menuMaxWidth) { // Csak akkor, ha teljesen nyitva van
+                ctx.fillStyle = 'black';
+                ctx.font = '16px Arial';
+                ctx.fillText('Option 1', menuX + 20, menuY + 40);
+                ctx.fillText('Option 2', menuX + 20, menuY + 80);
+                ctx.fillText('Option 3', menuX + 20, menuY + 120);
+            }
+        }
+
+        // Menü gomb megjelenítése
+        function drawButton() {
+            ctx.fillStyle = 'blue';
+            ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
+
+            ctx.fillStyle = 'white';
+            ctx.font = '16px Arial';
+            ctx.fillText('Menu', buttonX + 10, buttonY + 20);
+        }
+
+        // Canvas újrarajzolása a menü állapota alapján
+        function drawCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Töröljük a korábbi tartalmat
+            drawButton(); // Menü gomb
+            drawMenu(); // Menü megjelenítése az aktuális szélességgel
+        }
+
+        // Menü nyitása animációval
+        function openMenu() {
+            if (menuCurrentWidth < menuMaxWidth) {
+                menuCurrentWidth += 10; // Animációs lépés mérete
+                drawCanvas();
+                requestAnimationFrame(openMenu); // Következő animációs lépés
+            } else {
+                menuCurrentWidth = menuMaxWidth; // Biztosítjuk, hogy pontosan a max szélesség legyen
+                isAnimating = false; // Animáció vége
+            }
+        }
+
+        // Menü zárása animációval
+        function closeMenu() {
+            if (menuCurrentWidth > 0) {
+                menuCurrentWidth -= 10; // Animációs lépés mérete
+                drawCanvas();
+                requestAnimationFrame(closeMenu); // Következő animációs lépés
+            } else {
+                menuCurrentWidth = 0; // Biztosítjuk, hogy pontosan 0 legyen
+                isAnimating = false; // Animáció vége
+            }
+        }
+
+        // Kattintási esemény figyelése
+        canvas.addEventListener('click', (event) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            ctx.fillRect(200,200,100,100)
+            
+            // Ellenőrzés, hogy a kattintás a gomb területén történt-e
+            if (
+                x >= buttonX &&
+                x <= buttonX + buttonWidth &&
+                y >= buttonY &&
+                y <= buttonY + buttonHeight &&
+                !isAnimating // Csak akkor, ha nincs folyamatban animáció
+            ) {
+                isAnimating = true; // Animáció indítása
+                if (!isMenuOpen) {
+                    openMenu(); // Menü nyitása
+                } else {
+                    closeMenu(); // Menü zárása
+                }
+                isMenuOpen = !isMenuOpen; // Menü állapotának váltása
+            }
+        });
+
+        // Kezdeti rajzolás betöltéskor
+        drawCanvas();
+
+    </script>
+</body>
+</html>
