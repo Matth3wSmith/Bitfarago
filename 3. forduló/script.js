@@ -93,9 +93,21 @@ function nyertCheck(){
     if (done==required){
         console.log("nyert")
     }
-    else{
-        done=0
-    }
+    done=0
+}
+
+function Done(){
+    telepulesek.forEach(telepules => {
+        if (telepules.teljesulAzIgeny && telepules.igeny=="Kek"){
+            telepules.img=varosKekD
+        }
+        if (telepules.teljesulAzIgeny && telepules.igeny=="Narancs"){
+            telepules.img=varosNarancsD
+        }
+        if (telepules.teljesulAzIgeny && telepules.igeny=="Zold"){
+            telepules.img=varosZoldD
+        }
+    })
 }
 
 function torles(context){
@@ -119,7 +131,6 @@ function resizeCanvas() {
         muhely.height = muhely.eredetiHeight * arany;
         muhely.draw(ctx)
     })
-    
     // Ha szükséges, itt újrarajzolhatod a canvas tartalmát, mivel méretezéskor a rajz eltűnik
     // draw(); // Ezt a függvényt hozd létre a rajzolási tartalom megjelenítéséhez
 }
@@ -139,8 +150,9 @@ function canvasRajzolas(){
     torles(ctx);
     menuRajzolas();
     menuGombRajzolas();
-    telepulesekRajzolas();
     muhelyekRajzolas();
+    telepulesekRajzolas();
+   
 }
 
 //####################################################//
@@ -249,8 +261,9 @@ var done =0;
 c.height=windowHeight-300;*/
 
 // Kezdeti méretbeállítás betöltéskor, töröl mindent
-resizeCanvas();
-
+//resizeCanvas();
+c.width = c.offsetWidth;
+c.height = c.offsetHeight;
 const menuWidth = c.width
 const menuHeight = 125;
 var menuAktualisHeight = 0;
@@ -265,8 +278,13 @@ const menuMuhelyekXY={"kekX":menuWidth/4*2-50,"zoldX":menuWidth/4-50, "narancsX"
 const keretSize=[110,110]
 const menuMuhelySize = [100,100]
 
-var varos1 = document.getElementById("map1")
-var telepulesek = [new Telepules(10,10,varos1,100,100,"Kek"), new Telepules(800,100,varos1,100,100,"Zold")]
+var varosKek = document.getElementById("VarosKek")
+var varosNarancs = document.getElementById("VarosNarancs")
+var varosZold = document.getElementById("VarosZold")
+var varosKekD = document.getElementById("VarosKekD")
+var varosNarancsD = document.getElementById("VarosNarncsD")
+var varosZoldD = document.getElementById("VarosZoldD")
+var telepulesek = [new Telepules(10,10,varosKek,100,100,"Kek"), new Telepules(800,100,varosZold,100,100,"Zold")]
 
 
 canvasRajzolas();
@@ -310,7 +328,7 @@ drawContent();
 
 
 // Az ablak méretezésekor automatikus canvas átméretezés
-window.addEventListener('resize', resizeCanvas);
+//window.addEventListener('resize', resizeCanvas);
 
 c.addEventListener('mousedown',function (event){
     /*const rect = c.getBoundingClientRect();
@@ -346,15 +364,8 @@ c.addEventListener("mousemove",(event)=>{
                 telepules.teljesulAzIgeny=true;
             }
         })
-        telepulesek.forEach(telepules => {
-            if (telepules.teljesulAzIgeny){
-                done+=1
-            }
-        })
-        if (done==required){
-            console.log("nyert")
-        }
     }
+    Done()
     
 })
 
@@ -438,6 +449,7 @@ c.addEventListener('click', function (event) {
                 }
             })
         })
+        Done()
     
 
 }, false);
