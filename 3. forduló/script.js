@@ -38,16 +38,8 @@ class Muhely{
         this.xPos=event.offsetX;
         this.yPos=event.offsetY;
         console.log(event.offsetX,event.offsetY)
-        //Minden elem törlése a canvasról
-        torles(context)
-        //Újrarajzolás
-        muhelyek.forEach(muhely => {
-            muhely.draw(context)
-        })
-        //Újrarajzolás
-        telepulesek.forEach(telepules => {
-            telepules.draw(context)
-        })
+        //Canvas újrarajzolása
+        canvasRajzolas();
         console.log(muhelyek)
 
         }
@@ -131,15 +123,29 @@ function resizeCanvas() {
     // Ha szükséges, itt újrarajzolhatod a canvas tartalmát, mivel méretezéskor a rajz eltűnik
     // draw(); // Ezt a függvényt hozd létre a rajzolási tartalom megjelenítéséhez
 }
-function canvasRajzolas(){
-    torles(ctx);
-    menuRajzolas(ctx);
-    menuGombRajzolas();
+
+function muhelyekRajzolas(){
+    muhelyek.forEach(muhely => {
+        muhely.draw(ctx)
+    })
 }
 
-//####################################################
+function telepulesekRajzolas(){
+    telepulesek.forEach(telepules => {
+        telepules.draw(ctx)
+    })
+}
+function canvasRajzolas(){
+    torles(ctx);
+    menuRajzolas();
+    menuGombRajzolas();
+    telepulesekRajzolas();
+    muhelyekRajzolas();
+}
+
+//####################################################//
 //Menü függvényei
-function menuRajzolas(ctx){
+function menuRajzolas(){
     ctx.beginPath();
     ctx.strokeStyle="black";
     ctx.lineWidth=2;
@@ -162,6 +168,7 @@ function menuGombRajzolas(){
     ctx.fill();
     ctx.closePath();
 }
+
 function menuNyitas(){
 
     if (menuAktualisHeight < menuHeight) {
@@ -208,11 +215,15 @@ function muhelyMenu(){
     ctx.stroke()
 
 }
+
 //overlap vizsgálat
 function touch(elementX, elementY, centerX, centerY, radius){
     const distance = Math.sqrt((elementX - centerX)**2 + (elementY - centerY)**2);
     return distance <= radius;
 }
+
+//###########################################################################
+/*Változók*/
 const c = document.getElementById("jatek");
 const ctx = c.getContext("2d");
 
@@ -237,10 +248,6 @@ var done =0;
 /*c.width=windowWidth-700;
 c.height=windowHeight-300;*/
 
-
-// Az ablak méretezésekor automatikus canvas átméretezés
-window.addEventListener('resize', resizeCanvas);
-
 // Kezdeti méretbeállítás betöltéskor, töröl mindent
 resizeCanvas();
 
@@ -257,12 +264,15 @@ var menuOpen=false;
 const menuMuhelyekXY={"kekX":menuWidth/4*2-50,"zoldX":menuWidth/4-50, "narancsX":menuWidth/4*3-50, "Y":menuY-115, "kekKeretX":menuWidth/4*2-55, "zoldKeretX":menuWidth/4-55,"narancsKeretX":menuWidth/4*3-55, "keretY":menuY-120}
 const keretSize=[110,110]
 const menuMuhelySize = [100,100]
-//Menu ahol ki lehet választani a műhelyeket
+
+var varos1 = document.getElementById("map1")
+var telepulesek = [new Telepules(10,10,varos1,100,100,"Kek"), new Telepules(800,100,varos1,100,100,"Zold")]
+
 
 canvasRajzolas();
 
 
-//Mozgatható terület vaan mit javítani rajta
+//Mozgatható terület, vaan mit javítani rajta
 /*
 const contentWidth = 2000;   // Tartalom szélessége
 const contentHeight = 1500;  // Tartalom magassága
@@ -297,11 +307,11 @@ function drawContent() {
 // Kezdeti rajzolás
 drawContent();
 */
-var varos1 = document.getElementById("map1")
-var telepulesek = [new Telepules(10,10,varos1,100,100,"Kek"), new Telepules(800,100,varos1,100,100,"Zold")]
 
-telepulesek[0].draw(ctx)
-telepulesek[1].draw(ctx)
+
+// Az ablak méretezésekor automatikus canvas átméretezés
+window.addEventListener('resize', resizeCanvas);
+
 c.addEventListener('mousedown',function (event){
     /*const rect = c.getBoundingClientRect();
     const scaleX = c.width / rect.width;    // Skála a szélességhez
@@ -331,7 +341,7 @@ c.addEventListener("mousemove",(event)=>{
     if (mouseDown){
         mozgatott.mozgas(ctx,event)
         telepulesek.forEach(telepules => {
-            if (touch(telepules.xPos + telepules.width/2, telepules.yPos + telepules.height/2,mozgatott.xPos,mozgatott.yPos, mozgatott.radius) && muhely.szin==telepules.igeny){
+            if (touch(telepules.xPos + telepules.width/2, telepules.yPos + telepules.height/2, mozgatott.xPos,mozgatott.yPos, mozgatott.radius) && mozgatott.szin==telepules.igeny){
                 console.log("érintkezik")
                 telepules.teljesulAzIgeny=true;
             }
