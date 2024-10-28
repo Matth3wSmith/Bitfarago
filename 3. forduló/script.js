@@ -1,5 +1,5 @@
 class Muhely{
-    constructor(x,y,img,width,height){
+    constructor(x,y,img,width,height,tipus){
         this.xPos=x;
         this.yPos=y;
         this.arany=c.width/c.height
@@ -12,7 +12,8 @@ class Muhely{
         this.height=height*this.arany;
 
         this.eredetiRadius=150
-        this.radius=150*this.arany;
+        this.radius=150*this.arany
+        this.szin=tipus
 
 
     }
@@ -28,7 +29,7 @@ class Muhely{
         context.arc(this.xPos,this.yPos,this.radius,0,Math.PI*2,false);
         context.fillStyle="lightgreen";
         context.fill();
-        context.stroke();
+        context.stroke()
     }
     
     //mozgatás
@@ -43,6 +44,10 @@ class Muhely{
         muhelyek.forEach(muhely => {
             muhely.draw(context)
         })
+        //Újrarajzolás
+        telepulesek.forEach(telepules => {
+            telepules.draw(context)
+        })
         console.log(muhelyek)
 
         }
@@ -56,9 +61,10 @@ class Telepules{
         this.width=width;
         this.height=height;
         this.igeny=igeny;
+        this.teljesulAzIgeny=false;
     }
     draw(context){
-        context.drawImage(this.img,this.xPos,this.yPos)
+        context.drawImage(this.img,this.xPos,this.yPos, this.width, this.height)
     }
 }
 
@@ -83,6 +89,21 @@ function zoldCheck(img) {
     narancsOn = false;
     img.classList.add("selected");
     console.log(zoldOn)
+}
+
+function nyertCheck(){
+    telepulesek.forEach(telepules => {
+        if (telepules.teljesulAzIgeny){
+            done+=1
+            console.log(done)
+        }
+    })
+    if (done==required){
+        console.log("nyert")
+    }
+    else{
+        done=0
+    }
 }
 
 function torles(context){
@@ -187,6 +208,11 @@ function muhelyMenu(){
     ctx.stroke()
 
 }
+//overlap vizsgálat
+function touch(elementX, elementY, centerX, centerY, radius){
+    const distance = Math.sqrt((elementX - centerX)**2 + (elementY - centerY)**2);
+    return distance <= radius;
+}
 const c = document.getElementById("jatek");
 const ctx = c.getContext("2d");
 
@@ -205,6 +231,9 @@ var narancsOn = false;
 var zoldOn = false;
 var arany
 var mozgatott;
+//városok száma legyen benne mert ha a teljesülő igények(done) száma egyenlő ezzel akkor nyert a játékos
+var required= 2;
+var done =0;
 /*c.width=windowWidth-700;
 c.height=windowHeight-300;*/
 
@@ -268,7 +297,11 @@ function drawContent() {
 // Kezdeti rajzolás
 drawContent();
 */
+var varos1 = document.getElementById("map1")
+var telepulesek = [new Telepules(10,10,varos1,100,100,"Kek"), new Telepules(800,100,varos1,100,100,"Zold")]
 
+telepulesek[0].draw(ctx)
+telepulesek[1].draw(ctx)
 c.addEventListener('mousedown',function (event){
     /*const rect = c.getBoundingClientRect();
     const scaleX = c.width / rect.width;    // Skála a szélességhez
@@ -297,15 +330,33 @@ c.addEventListener('mousedown',function (event){
 c.addEventListener("mousemove",(event)=>{
     if (mouseDown){
         mozgatott.mozgas(ctx,event)
+        telepulesek.forEach(telepules => {
+            if (touch(telepules.xPos + telepules.width/2, telepules.yPos + telepules.height/2,mozgatott.xPos,mozgatott.yPos, mozgatott.radius) && muhely.szin==telepules.igeny){
+                console.log("érintkezik")
+                telepules.teljesulAzIgeny=true;
+            }
+        })
+        telepulesek.forEach(telepules => {
+            if (telepules.teljesulAzIgeny){
+                done+=1
+            }
+        })
+        if (done==required){
+            console.log("nyert")
+        }
     }
+    
 })
 
 //Ha felengedi az egeret a műhely mozgatása is álljon meg
 c.addEventListener("mouseup",function (event){
     mouseDown=false;
+   
+    
 })
 
 c.addEventListener('click', function (event) {
+    
     //console.log(event)
     let x = event.offsetX;
     let y = event.offsetY;
@@ -313,7 +364,7 @@ c.addEventListener('click', function (event) {
     if (zoldOn == true) {
         let img = document.getElementById("allomasZold");
         img.classList.remove("selected");
-        let muhely = new Muhely(x,y,img,100,100);
+        let muhely = new Muhely(x,y,img,100,100,"Zold");
         muhelyek.push(muhely)
         muhely.draw(ctx);
         zoldOn=false;
@@ -321,7 +372,7 @@ c.addEventListener('click', function (event) {
     if (narancsOn == true) {
         let img = document.getElementById("allomasNarancs")
         img.classList.remove("selected");
-        let muhely = new Muhely(x,y,img,100,100);
+        let muhely = new Muhely(x,y,img,100,100,"Narancs");
         muhelyek.push(muhely)
         muhely.draw(ctx);
         narancsOn=false;
@@ -329,7 +380,7 @@ c.addEventListener('click', function (event) {
     if (kekOn == true) {
         let img = document.getElementById("allomasKek")
         img.classList.remove("selected");
-        let muhely = new Muhely(x,y,img,100,100);
+        let muhely = new Muhely(x,y,img,100,100,"Kek");
         muhelyek.push(muhely)
         muhely.draw(ctx);
         kekOn=false;
@@ -367,7 +418,17 @@ c.addEventListener('click', function (event) {
             }
             menuOpen = !menuOpen; // Menü állapotának váltása
         }
-
+        muhelyek.forEach(muhely => {
+            telepulesek.forEach(telepules => {
+                if (touch(telepules.xPos + telepules.width/2, telepules.yPos + telepules.height/2,muhely.xPos,muhely.yPos, muhely.radius) && telepules.igeny==muhely.szin){
+                    //console.log(telepules.igeny,muhely.tipus) 
+                    console.log("érintkezik clicknél")
+                    telepules.teljesulAzIgeny=true;
+                    console.log(telepulesek)
+                }
+            })
+        })
+    
 
 }, false);
 
