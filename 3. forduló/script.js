@@ -176,9 +176,15 @@ function muhelyMenu(){
     let zold=document.getElementById("allomasZold");
     let kek=document.getElementById("allomasKek");
     let narancs=document.getElementById("allomasNarancs");
-    ctx.drawImage(zold,menuWidth/3-150,menuY-110,100,100)
-    ctx.drawImage(kek,menuWidth/3*2-150,menuY-110,100,100)
-    ctx.drawImage(narancs,menuWidth-150,menuY-110,100,100)
+    let imgWidth=100;
+    
+    ctx.drawImage(zold,menuMuhelyekXY["zoldX"],menuMuhelyekXY["Y"],menuMuhelySize[0],menuMuhelySize[1])
+    ctx.rect(menuMuhelyekXY["zoldKeretX"],menuMuhelyekXY["keretY"],keretSize[0],keretSize[1])
+    ctx.drawImage(kek,menuMuhelyekXY["kekX"],menuMuhelyekXY["Y"],menuMuhelySize[0],menuMuhelySize[1])
+    ctx.rect(menuMuhelyekXY["kekKeretX"],menuMuhelyekXY["keretY"],keretSize[0],keretSize[1])
+    ctx.drawImage(narancs,menuMuhelyekXY["narancsX"],menuMuhelyekXY["Y"],menuMuhelySize[0],menuMuhelySize[1])
+    ctx.rect(menuMuhelyekXY["narancsKeretX"],menuMuhelyekXY["keretY"],keretSize[0],keretSize[1])
+    ctx.stroke()
 
 }
 const c = document.getElementById("jatek");
@@ -219,7 +225,9 @@ var menuY = c.height
 var menuGombX = c.width/2-menuGombWidth/2;
 var menuGombY = c.height-menuGombHeight-menuAktualisHeight;
 var menuOpen=false;
-
+const menuMuhelyekXY={"kekX":menuWidth/4*2-50,"zoldX":menuWidth/4-50, "narancsX":menuWidth/4*3-50, "Y":menuY-115, "kekKeretX":menuWidth/4*2-55, "zoldKeretX":menuWidth/4-55,"narancsKeretX":menuWidth/4*3-55, "keretY":menuY-120}
+const keretSize=[110,110]
+const menuMuhelySize = [100,100]
 //Menu ahol ki lehet választani a műhelyeket
 
 canvasRajzolas();
@@ -326,7 +334,28 @@ c.addEventListener('click', function (event) {
         muhely.draw(ctx);
         kekOn=false;
     }
-    
+    if (menuOpen && x>=menuX && x<=menuX+menuWidth &&
+        y<=menuY && y>=menuY-menuHeight){
+            //Ha a zöld műhelyre kattintunk
+            if (x>=menuMuhelyekXY["zoldKeretX"] && x<=menuMuhelyekXY["zoldKeretX"]+menuMuhelySize[0] &&
+                y>=menuMuhelyekXY["keretY"] && y<=menuMuhelyekXY["keretY"]+menuMuhelySize[1]){
+                    console.log("A zöld műheylre nyomtál");
+                    zoldOn=true;
+            }
+            //Ha a kék műhelyre kattintunk
+            else if (x>=menuMuhelyekXY["kekKeretX"] && x<=menuMuhelyekXY["kekKeretX"]+menuMuhelySize[0] &&
+                y>=menuMuhelyekXY["keretY"] && y<=menuMuhelyekXY["keretY"]+menuMuhelySize[1]){
+                    console.log("A kék műheylre nyomtál");
+                    kekOn=true;
+            }
+            //Ha a narancs műhelyre kattintunk
+            else if (x>=menuMuhelyekXY["narancsKeretX"] && x<=menuMuhelyekXY["narancsKeretX"]+menuMuhelySize[0] &&
+                y>=menuMuhelyekXY["keretY"] && y<=menuMuhelyekXY["keretY"]+menuMuhelySize[1]){
+                    console.log("A narancs műheylre nyomtál");
+                    narancsOn=true;
+
+            }
+        }
     //Menu nyitogatás
     if (x>=menuGombX && x<=menuGombX+menuGombWidth && 
         y >= menuGombY && y<= menuGombY+menuGombHeight){
