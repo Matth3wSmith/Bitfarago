@@ -91,6 +91,21 @@ function zoldCheck(img) {
     console.log(zoldOn)
 }
 
+function nyertCheck(){
+    telepulesek.forEach(telepules => {
+        if (telepules.teljesulAzIgeny){
+            done+=1
+            console.log(done)
+        }
+    })
+    if (done==required){
+        console.log("nyert")
+    }
+    else{
+        done=0
+    }
+}
+
 function torles(context){
     context.clearRect(0, 0, c.width, c.height);
 }
@@ -210,6 +225,9 @@ var narancsOn = false;
 var zoldOn = false;
 var arany
 var mozgatott;
+//városok száma legyen benne mert ha a teljesülő igények(done) száma egyenlő ezzel akkor nyert a játékos
+var required= 2;
+var done =0;
 /*c.width=windowWidth-700;
 c.height=windowHeight-300;*/
 
@@ -272,9 +290,10 @@ function drawContent() {
 drawContent();
 */
 var varos1 = document.getElementById("map1")
-var telepulesek = [new Telepules(10,10,varos1,100,100,"Kek"), new Telepules(20,100,varos1,100,100,"Zold")]
+var telepulesek = [new Telepules(10,10,varos1,100,100,"Kek"), new Telepules(800,100,varos1,100,100,"Zold")]
 
 telepulesek[0].draw(ctx)
+telepulesek[1].draw(ctx)
 c.addEventListener('mousedown',function (event){
     /*const rect = c.getBoundingClientRect();
     const scaleX = c.width / rect.width;    // Skála a szélességhez
@@ -304,11 +323,19 @@ c.addEventListener("mousemove",(event)=>{
     if (mouseDown){
         mozgatott.mozgas(ctx,event)
         telepulesek.forEach(telepules => {
-            if (touch(telepules.xPos + telepules.width/2, telepules.yPos + telepules.height/2,mozgatott.xPos,mozgatott.yPos, mozgatott.radius)){
+            if (touch(telepules.xPos + telepules.width/2, telepules.yPos + telepules.height/2,mozgatott.xPos,mozgatott.yPos, mozgatott.radius) && muhely.szin==telepules.igeny){
                 console.log("érintkezik")
                 telepules.teljesulAzIgeny=true;
             }
         })
+        telepulesek.forEach(telepules => {
+            if (telepules.teljesulAzIgeny){
+                done+=1
+            }
+        })
+        if (done==required){
+            console.log("nyert")
+        }
     }
     
 })
@@ -364,13 +391,15 @@ c.addEventListener('click', function (event) {
         }
         muhelyek.forEach(muhely => {
             telepulesek.forEach(telepules => {
-                if (touch(telepules.xPos + telepules.width/2, telepules.yPos + telepules.height/2,muhely.xPos,muhely.yPos, muhely.radius)&& telepules.igeny==muhely.tipus){
+                if (touch(telepules.xPos + telepules.width/2, telepules.yPos + telepules.height/2,muhely.xPos,muhely.yPos, muhely.radius) && telepules.igeny==muhely.szin){
+                    //console.log(telepules.igeny,muhely.tipus) 
                     console.log("érintkezik clicknél")
                     telepules.teljesulAzIgeny=true;
                     console.log(telepulesek)
                 }
             })
         })
+    
 
 }, false);
 
