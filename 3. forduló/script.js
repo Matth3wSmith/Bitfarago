@@ -125,6 +125,16 @@ function Done(){
         if (telepules.teljesulAzIgeny && telepules.igeny=="Zold"){
             telepules.img=varosZoldD
         }
+        if (!telepules.teljesulAzIgeny && telepules.igeny=="Kek"){
+            telepules.img=varosKek
+        }
+        if (!telepules.teljesulAzIgeny && telepules.igeny=="Narancs"){
+            telepules.img=varosNarancs
+        }
+        if (!telepules.teljesulAzIgeny && telepules.igeny=="Zold"){
+            telepules.img=varosZold
+        }
+
     })
 }
 
@@ -447,6 +457,10 @@ c.addEventListener("mousemove",(event)=>{
             if (touch(telepules.xPos + telepules.width/2, telepules.yPos + telepules.height/2, mozgatott.xPos,mozgatott.yPos, mozgatott.radius) && mozgatott.szin==telepules.igeny){
                 console.log("érintkezik")
                 telepules.teljesulAzIgeny=true;
+            }
+            else if (!touch(telepules.xPos + telepules.width/2, telepules.yPos + telepules.height/2, mozgatott.xPos,mozgatott.yPos, mozgatott.radius)) {
+                telepules.teljesulAzIgeny=false
+                console.log(telepules.teljesulAzIgeny)
             }
         })
     }
