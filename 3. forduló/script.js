@@ -45,13 +45,13 @@ class Muhely{
 }
 
 class Telepules{
-    constructor(x,y,img,width,height,igeny1,){
+    constructor(x,y,img,width,height,igeny,){
         this.xPos=x;
         this.yPos=y;
         this.img=img;
         this.width=width;
         this.height=height;
-        this.igeny1=igeny1;
+        this.igeny=igeny;
         this.teljesulAzIgeny=false;
     }
     draw(context){
@@ -490,7 +490,7 @@ c.addEventListener("mousemove",(event)=>{
     if (mouseDown){
         mozgatott.mozgas(ctx,event)
         telepulesek.forEach(telepules => {
-            if (touch(telepules.xPos - telepules.width/2, telepules.yPos - telepules.height/2, mozgatott.xPos,mozgatott.yPos, mozgatott.radius) && mozgatott.szin==telepules.igeny){
+            if (touch(telepules.xPos - telepules.width/2, telepules.yPos + telepules.height/2, mozgatott.xPos,mozgatott.yPos, mozgatott.radius) && mozgatott.szin==telepules.igeny){
                 console.log("érintkezik")
                 telepules.teljesulAzIgeny=true;
             }
@@ -562,6 +562,10 @@ c.addEventListener('click', function (event) {
                     console.log("érintkezik clicknél")
                     telepules.teljesulAzIgeny=true;
                     console.log(telepulesek)
+                }
+                else if (!touch(telepules.xPos + telepules.width/2, telepules.yPos + telepules.height/2, mozgatott.xPos,mozgatott.yPos, mozgatott.radius)) {
+                    telepules.teljesulAzIgeny=false
+                    console.log(telepules.teljesulAzIgeny)
                 }
             })
         })
