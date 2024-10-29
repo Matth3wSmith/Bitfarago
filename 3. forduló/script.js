@@ -11,8 +11,8 @@ class Muhely{
         this.width=width*this.arany;
         this.height=height*this.arany;
 
-        this.eredetiRadius=80
-        this.radius=80*this.arany
+        this.eredetiRadius=180
+        this.radius=180*this.arany
         this.szin=tipus
 
 
@@ -45,13 +45,13 @@ class Muhely{
 }
 
 class Telepules{
-    constructor(x,y,img,width,height,igeny1,){
+    constructor(x,y,img,width,height,igeny){
         this.xPos=x;
         this.yPos=y;
         this.img=img;
         this.width=width;
         this.height=height;
-        this.igeny1=igeny1;
+        this.igeny=igeny;
         this.teljesulAzIgeny=false;
     }
     draw(context){
@@ -494,7 +494,7 @@ c.addEventListener("mousemove",(event)=>{
                 console.log("érintkezik")
                 telepules.teljesulAzIgeny=true;
             }
-            else if (!touch(telepules.xPos + telepules.width/2, telepules.yPos + telepules.height/2, mozgatott.xPos,mozgatott.yPos, mozgatott.radius)) {
+            else if (!touch(telepules.xPos - telepules.width/2, telepules.yPos - telepules.height/2, mozgatott.xPos,mozgatott.yPos, mozgatott.radius)) {
                 telepules.teljesulAzIgeny=false
                 console.log(telepules.teljesulAzIgeny)
             }
