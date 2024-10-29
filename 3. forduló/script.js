@@ -45,13 +45,13 @@ class Muhely{
 }
 
 class Telepules{
-    constructor(x,y,img,width,height,igeny){
+    constructor(x,y,img,width,height,igeny1,){
         this.xPos=x;
         this.yPos=y;
         this.img=img;
         this.width=width;
         this.height=height;
-        this.igeny=igeny;
+        this.igeny1=igeny1;
         this.teljesulAzIgeny=false;
     }
     draw(context){
