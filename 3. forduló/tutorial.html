@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simcity</title>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body id="body">
+    <div>
+        <img id="elmuKep" src="./muhelyek/warehouse.png">
+        <h1 id="elmu">Elektromos Művek</h1>
+    </div>s
+    <div class="container">
+        <div class="row">
+            <div class="col-12 tabla">
+                <div class="canvas-container"><canvas id="jatek"></canvas></div>
+                <div id="keret">
+                    <div class="allomas"><img src="./muhelyek/muhelyZold.png" onclick=zoldCheck(this) alt="" id="allomasZold"></div>
+                    <div class="allomas"> <img src="./muhelyek/muhelyKek.png" onclick=kekCheck(this) alt="" id="allomasKek"></div>
+                    <div class="allomas"><img src="./muhelyek/muhelyNarancs.png" onclick=narancsCheck(this) alt="" id="allomasNarancs"></div>
+                    <div class="allomas"><img src="./terkep/map1.png" id="map1"></div>
+                    <button type="button" onclick=nyertCheck()>Kész</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</html>

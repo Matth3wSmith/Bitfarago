@@ -40,7 +40,6 @@ class Muhely{
         console.log(event.offsetX,event.offsetY)
         //Canvas újrarajzolása
         canvasRajzolas();
-        console.log(muhelyek)
 
         }
 }
@@ -119,6 +118,7 @@ function resizeCanvas() {
         muhely.height = muhely.eredetiHeight * arany;
         muhely.draw(ctx)
     })
+
     
     // Ha szükséges, itt újrarajzolhatod a canvas tartalmát, mivel méretezéskor a rajz eltűnik
     // draw(); // Ezt a függvényt hozd létre a rajzolási tartalom megjelenítéséhez
@@ -137,10 +137,10 @@ function telepulesekRajzolas(){
 }
 function canvasRajzolas(){
     torles(ctx);
-    menuRajzolas();
-    menuGombRajzolas();
     telepulesekRajzolas();
     muhelyekRajzolas();
+    menuRajzolas();
+    menuGombRajzolas();
 }
 
 //####################################################//
@@ -149,7 +149,9 @@ function menuRajzolas(){
     ctx.beginPath();
     ctx.strokeStyle="black";
     ctx.lineWidth=2;
+    ctx.fillStyle="gray"
     ctx.rect(menuX,menuY,menuWidth,-menuAktualisHeight) // menü területe
+    ctx.fill()
     ctx.stroke();
 }
 
@@ -167,12 +169,15 @@ function menuGombRajzolas(){
     ctx.fillStyle = 'black'; // nyíl színe
     ctx.fill();
     ctx.closePath();
+    if (menuOpen){
+        muhelyMenu();
+    }
 }
 
 function menuNyitas(){
 
     if (menuAktualisHeight < menuHeight) {
-        menuAktualisHeight += 10; // Animációs lépés mérete
+        menuAktualisHeight += 5; // Animációs lépés mérete
         menuGombY = c.height-menuGombHeight-menuAktualisHeight; //Gomb y koordinátákjának feljebb tolása
         canvasRajzolas();
         requestAnimationFrame(menuNyitas); // Következő animációs lépés
@@ -189,7 +194,7 @@ function menuNyitas(){
 
 function menuBezaras(ctx){
     if (menuAktualisHeight > 0) {
-        menuAktualisHeight -= 10; // Animációs lépés mérete
+        menuAktualisHeight -= 5; // Animációs lépés mérete
         menuGombY = c.height-menuGombHeight-menuAktualisHeight; //Gomb y koordinátákjának feljebb tolása
         canvasRajzolas();
         requestAnimationFrame(menuBezaras); // Következő animációs lépés
@@ -205,13 +210,27 @@ function muhelyMenu(){
     let kek=document.getElementById("allomasKek");
     let narancs=document.getElementById("allomasNarancs");
     let imgWidth=100;
-    
-    ctx.drawImage(zold,menuMuhelyekXY["zoldX"],menuMuhelyekXY["Y"],menuMuhelySize[0],menuMuhelySize[1])
+    ctx.beginPath()
+    ctx.lineWidth=1
+    ctx.fillStyle="cyan"
     ctx.rect(menuMuhelyekXY["zoldKeretX"],menuMuhelyekXY["keretY"],keretSize[0],keretSize[1])
-    ctx.drawImage(kek,menuMuhelyekXY["kekX"],menuMuhelyekXY["Y"],menuMuhelySize[0],menuMuhelySize[1])
     ctx.rect(menuMuhelyekXY["kekKeretX"],menuMuhelyekXY["keretY"],keretSize[0],keretSize[1])
-    ctx.drawImage(narancs,menuMuhelyekXY["narancsX"],menuMuhelyekXY["Y"],menuMuhelySize[0],menuMuhelySize[1])
     ctx.rect(menuMuhelyekXY["narancsKeretX"],menuMuhelyekXY["keretY"],keretSize[0],keretSize[1])
+    ctx.fill()
+    ctx.stroke()
+    ctx.beginPath()
+    ctx.fillStyle="black"
+    ctx.font = "25px Copperplate";
+    ctx.fillText("2", menuMuhelyekXY["zoldKeretX"]+4, menuMuhelyekXY["keretY"]+23);
+    ctx.moveTo(menuMuhelyekXY["zoldKeretX"]+25,menuMuhelyekXY["keretY"])
+    ctx.lineTo(menuMuhelyekXY["zoldKeretX"]+10,menuMuhelyekXY["keretY"]+15)
+    ctx.arcTo(menuMuhelyekXY["zoldKeretX"]+25,menuMuhelyekXY["keretY"]+15,menuMuhelyekXY["zoldKeretX"]+25,menuMuhelyekXY["keretY"]+30,50)
+    ctx.lineTo(menuMuhelyekXY["zoldKeretX"]+25,menuMuhelyekXY["keretY"]+50)
+ 
+
+    ctx.drawImage(zold,menuMuhelyekXY["zoldX"],menuMuhelyekXY["Y"],menuMuhelySize[0],menuMuhelySize[1])
+    ctx.drawImage(kek,menuMuhelyekXY["kekX"],menuMuhelyekXY["Y"],menuMuhelySize[0],menuMuhelySize[1])
+    ctx.drawImage(narancs,menuMuhelyekXY["narancsX"],menuMuhelyekXY["Y"],menuMuhelySize[0],menuMuhelySize[1])
     ctx.stroke()
 
 }
@@ -249,10 +268,12 @@ var done =0;
 c.height=windowHeight-300;*/
 
 // Kezdeti méretbeállítás betöltéskor, töröl mindent
-resizeCanvas();
+//resizeCanvas();
+c.width = c.offsetWidth; //Ez a kettő nem kell ha resizecanvas bent van
+c.height = c.offsetHeight;
 
 const menuWidth = c.width
-const menuHeight = 125;
+const menuHeight = 130;
 var menuAktualisHeight = 0;
 const menuGombWidth = 50;
 const menuGombHeight = 50
@@ -310,7 +331,7 @@ drawContent();
 
 
 // Az ablak méretezésekor automatikus canvas átméretezés
-window.addEventListener('resize', resizeCanvas);
+//window.addEventListener('resize', resizeCanvas);
 
 c.addEventListener('mousedown',function (event){
     /*const rect = c.getBoundingClientRect();
@@ -323,6 +344,36 @@ c.addEventListener('mousedown',function (event){
     */
     let x = event.offsetX;
     let y = event.offsetY;
+
+
+    if (menuOpen && x>=menuX && x<=menuX+menuWidth &&
+        y<=menuY && y>=menuY-menuHeight){
+        let muhely
+        //Ha a zöld műhelyre kattintunk
+        if (x>=menuMuhelyekXY["zoldKeretX"] && x<=menuMuhelyekXY["zoldKeretX"]+menuMuhelySize[0] &&
+            y>=menuMuhelyekXY["keretY"] && y<=menuMuhelyekXY["keretY"]+menuMuhelySize[1]){
+                console.log("A zöld műheylre nyomtál");
+                let img = document.getElementById("allomasZold")
+                muhely = new Muhely(x,y,img,100,100,"Zold")
+        }
+        //Ha a kék műhelyre kattintunk
+        else if (x>=menuMuhelyekXY["kekKeretX"] && x<=menuMuhelyekXY["kekKeretX"]+menuMuhelySize[0] &&
+            y>=menuMuhelyekXY["keretY"] && y<=menuMuhelyekXY["keretY"]+menuMuhelySize[1]){
+                console.log("A kék műheylre nyomtál");
+                let img = document.getElementById("allomasKek")
+                muhely = new Muhely(x,y,img,100,100,"Kek")
+        }
+        //Ha a narancs műhelyre kattintunk
+        else if (x>=menuMuhelyekXY["narancsKeretX"] && x<=menuMuhelyekXY["narancsKeretX"]+menuMuhelySize[0] &&
+            y>=menuMuhelyekXY["keretY"] && y<=menuMuhelyekXY["keretY"]+menuMuhelySize[1]){
+                console.log("A narancs műheylre nyomtál");
+                let img = document.getElementById("allomasNarancs")
+                muhely = new Muhely(x,y,img,100,100,"Narancs")
+        }
+        muhelyek.push(muhely)
+        mozgatott=muhely;
+    }
+    
     console.log("Egérlenyomás koordinátái:"+x+" "+y)
     muhelyek.forEach(muhely => {
         //console.log(muhely)
@@ -346,15 +397,8 @@ c.addEventListener("mousemove",(event)=>{
                 telepules.teljesulAzIgeny=true;
             }
         })
-        telepulesek.forEach(telepules => {
-            if (telepules.teljesulAzIgeny){
-                done+=1
-            }
-        })
-        if (done==required){
-            console.log("nyert")
-        }
     }
+    
     
 })
 
@@ -395,28 +439,7 @@ c.addEventListener('click', function (event) {
         muhely.draw(ctx);
         kekOn=false;
     }
-    if (menuOpen && x>=menuX && x<=menuX+menuWidth &&
-        y<=menuY && y>=menuY-menuHeight){
-            //Ha a zöld műhelyre kattintunk
-            if (x>=menuMuhelyekXY["zoldKeretX"] && x<=menuMuhelyekXY["zoldKeretX"]+menuMuhelySize[0] &&
-                y>=menuMuhelyekXY["keretY"] && y<=menuMuhelyekXY["keretY"]+menuMuhelySize[1]){
-                    console.log("A zöld műheylre nyomtál");
-                    zoldOn=true;
-            }
-            //Ha a kék műhelyre kattintunk
-            else if (x>=menuMuhelyekXY["kekKeretX"] && x<=menuMuhelyekXY["kekKeretX"]+menuMuhelySize[0] &&
-                y>=menuMuhelyekXY["keretY"] && y<=menuMuhelyekXY["keretY"]+menuMuhelySize[1]){
-                    console.log("A kék műheylre nyomtál");
-                    kekOn=true;
-            }
-            //Ha a narancs műhelyre kattintunk
-            else if (x>=menuMuhelyekXY["narancsKeretX"] && x<=menuMuhelyekXY["narancsKeretX"]+menuMuhelySize[0] &&
-                y>=menuMuhelyekXY["keretY"] && y<=menuMuhelyekXY["keretY"]+menuMuhelySize[1]){
-                    console.log("A narancs műheylre nyomtál");
-                    narancsOn=true;
-
-            }
-        }
+    
     //Menu nyitogatás
     if (x>=menuGombX && x<=menuGombX+menuGombWidth && 
         y >= menuGombY && y<= menuGombY+menuGombHeight){
