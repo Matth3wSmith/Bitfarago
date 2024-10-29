@@ -45,13 +45,13 @@ class Muhely{
 }
 
 class Telepules{
-    constructor(x,y,img,width,height,igeny){
+    constructor(x,y,img,width,height,igeny1,){
         this.xPos=x;
         this.yPos=y;
         this.img=img;
         this.width=width;
         this.height=height;
-        this.igeny=igeny;
+        this.igeny1=igeny1;
         this.teljesulAzIgeny=false;
     }
     draw(context){
@@ -151,6 +151,16 @@ function Done(){
         if (telepules.teljesulAzIgeny && telepules.igeny=="Zold"){
             telepules.img=varosZoldD
         }
+        if (!telepules.teljesulAzIgeny && telepules.igeny=="Kek"){
+            telepules.img=varosKek
+        }
+        if (!telepules.teljesulAzIgeny && telepules.igeny=="Narancs"){
+            telepules.img=varosNarancs
+        }
+        if (!telepules.teljesulAzIgeny && telepules.igeny=="Zold"){
+            telepules.img=varosZold
+        }
+
     })
 }
 
@@ -483,6 +493,10 @@ c.addEventListener("mousemove",(event)=>{
             if (touch(telepules.xPos - telepules.width/2, telepules.yPos - telepules.height/2, mozgatott.xPos,mozgatott.yPos, mozgatott.radius) && mozgatott.szin==telepules.igeny){
                 console.log("érintkezik")
                 telepules.teljesulAzIgeny=true;
+            }
+            else if (!touch(telepules.xPos + telepules.width/2, telepules.yPos + telepules.height/2, mozgatott.xPos,mozgatott.yPos, mozgatott.radius)) {
+                telepules.teljesulAzIgeny=false
+                console.log(telepules.teljesulAzIgeny)
             }
         })
     }
