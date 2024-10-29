@@ -11,8 +11,8 @@ class Muhely{
         this.width=width*this.arany;
         this.height=height*this.arany;
 
-        this.eredetiRadius=150
-        this.radius=150*this.arany
+        this.eredetiRadius=80
+        this.radius=80*this.arany
         this.szin=tipus
 
 
@@ -55,7 +55,7 @@ class Telepules{
         this.teljesulAzIgeny=false;
     }
     draw(context){
-        context.drawImage(this.img,this.xPos,this.yPos, this.width, this.height)
+        context.drawImage(this.img,this.xPos-this.width/2,this.yPos-this.height/2, this.width, this.height)
     }
     igenyNemTeljesul(ctx){
         ctx.beginPath();
@@ -65,7 +65,33 @@ class Telepules{
         this.draw(ctx);
     }
 }
+class To{
+    constructor(x,y,img,width,height){
+        this.xPos=x;
+        this.yPos=y;
+        this.img=img;
+        this.width=width;
+        this.height=height;
+    }
+    draw(){
+        ctx.drawImage(this.img,this.xPos,this.yPos,this.width,this.height)
+    }
+    //Automata generáláshoz (ha lesz)
+    /*ellenorzes(){
+        telepulesek.forEach(telepules => {
+            //Ha a tó generálás koordinátája érintetne egy várost generáljon új koordinátát
+            if(this.xPos >= telepules.xPos && this.xPos <= telepules.xPos+telepules.width &&
+                this.yPos >= telepules.yPos && this.yPos <= telepules.yPos+telepules.height){ 
+                    this.xPos=Math.random() * c.width
+                    this.yPos=Math.random() * c.height
+                }
+            else{
+                this.draw()
+            }
 
+        });
+    }*/
+}
 function kekCheck(img) {
     kekOn = true;
     zoldOn = false;
@@ -260,6 +286,7 @@ function muhelyMenu(){
         ctx.lineTo(menuMuhelyekXY[menuMuhelyekXY_XKoordNev],menuMuhelyekXY["keretY"]+30)
         ctx.stroke()
     }
+    
     lehelyezhetoMuhely("zoldKeretX",zoldMuhelyMennyiseg)
     lehelyezhetoMuhely("narancsKeretX",narancsMuhelyMennyiseg)
     lehelyezhetoMuhely("kekKeretX",kekMuhelyMennyiseg)
@@ -292,6 +319,7 @@ const eredetiCanvasHeight=c.height;
 
 var animacio = false;
 var muhelyek=[];
+var tavak=[];
 var mouseDown=false;
 var kekOn = false;
 var narancsOn = false;
@@ -323,12 +351,12 @@ const keretSize=[100,100]
 const menuMuhelySize = [70,70]
 const menuMuhelyekXY={"kekX":menuWidth/4*2-menuMuhelySize[0]/2,"zoldX":menuWidth/4-menuMuhelySize[0]/2, "narancsX":menuWidth/4*3-menuMuhelySize[0]/2, "Y":menuY-menuHeight/2-menuMuhelySize[1]/2, "kekKeretX":menuWidth/4*2-keretSize[0]/2, "zoldKeretX":menuWidth/4-keretSize[0]/2,"narancsKeretX":menuWidth/4*3-keretSize[0]/2, "keretY":menuY-menuHeight/2-keretSize[1]/2}
 
-
+//#########
 //Feladványtól függően lehet állítani
 var kekMuhelyMennyiseg = 2
 var narancsMuhelyMennyiseg = 2
 var zoldMuhelyMennyiseg = 2
-
+//##########
 var varosKek = document.getElementById("VarosKek")
 var varosNarancs = document.getElementById("VarosNarancs")
 var varosZold = document.getElementById("VarosZold")
@@ -336,6 +364,7 @@ var varosKekD = document.getElementById("VarosKekD")
 var varosNarancsD = document.getElementById("VarosNarncsD")
 var varosZoldD = document.getElementById("VarosZoldD")
 var telepulesek = [new Telepules(10,10,varosKek,100,100,"Kek"), new Telepules(800,100,varosZold,100,100,"Zold")]
+var muhelySize=100;
 //változók vége
 //##################################
 
@@ -403,7 +432,10 @@ c.addEventListener('mousedown',function (event){
             y>=menuMuhelyekXY["keretY"] && y<=menuMuhelyekXY["keretY"]+menuMuhelySize[1] && zoldMuhelyMennyiseg>0){
                 console.log("A zöld műheylre nyomtál");
                 let img = document.getElementById("allomasZold")
-                muhely = new Muhely(x,y,img,100,100,"Zold")
+                muhely = new Muhely(x,y,img,muhelySize,muhelySize,"Zold")
+                muhelyek.push(muhely)
+                muhely.draw(ctx)
+                mozgatott=muhely;
                 zoldMuhelyMennyiseg--
         }
         //Ha a kék műhelyre kattintunk
@@ -411,7 +443,10 @@ c.addEventListener('mousedown',function (event){
             y>=menuMuhelyekXY["keretY"] && y<=menuMuhelyekXY["keretY"]+menuMuhelySize[1] && kekMuhelyMennyiseg>0){
                 console.log("A kék műheylre nyomtál");
                 let img = document.getElementById("allomasKek")
-                muhely = new Muhely(x,y,img,100,100,"Kek")
+                muhely = new Muhely(x,y,img,muhelySize,muhelySize,"Kek")
+                muhelyek.push(muhely)
+                muhely.draw(ctx)
+                mozgatott=muhely;
                 kekMuhelyMennyiseg--
         }
         //Ha a narancs műhelyre kattintunk
@@ -419,11 +454,12 @@ c.addEventListener('mousedown',function (event){
             y>=menuMuhelyekXY["keretY"] && y<=menuMuhelyekXY["keretY"]+menuMuhelySize[1] && narancsMuhelyMennyiseg>0){
                 console.log("A narancs műheylre nyomtál");
                 let img = document.getElementById("allomasNarancs")
-                muhely = new Muhely(x,y,img,100,100,"Narancs")
+                muhely = new Muhely(x,y,img,muhelySize,muhelySize,"Narancs")
+                muhelyek.push(muhely)
+                muhely.draw(ctx)
+                mozgatott=muhely;
                 narancsMuhelyMennyiseg--
         }
-        muhelyek.push(muhely)
-        mozgatott=muhely;
     }
     
     console.log("Egérlenyomás koordinátái:"+x+" "+y)
@@ -444,7 +480,7 @@ c.addEventListener("mousemove",(event)=>{
     if (mouseDown){
         mozgatott.mozgas(ctx,event)
         telepulesek.forEach(telepules => {
-            if (touch(telepules.xPos + telepules.width/2, telepules.yPos + telepules.height/2, mozgatott.xPos,mozgatott.yPos, mozgatott.radius) && mozgatott.szin==telepules.igeny){
+            if (touch(telepules.xPos - telepules.width/2, telepules.yPos - telepules.height/2, mozgatott.xPos,mozgatott.yPos, mozgatott.radius) && mozgatott.szin==telepules.igeny){
                 console.log("érintkezik")
                 telepules.teljesulAzIgeny=true;
             }
@@ -472,7 +508,7 @@ c.addEventListener('click', function (event) {
     if (zoldOn == true) {
         let img = document.getElementById("allomasZold");
         img.classList.remove("selected");
-        let muhely = new Muhely(x,y,img,100,100,"Zold");
+        let muhely = new Muhely(x,y,img,muhelySize,muhelySize,"Zold");
         muhelyek.push(muhely)
         muhely.draw(ctx);
         zoldOn=false;
@@ -480,7 +516,7 @@ c.addEventListener('click', function (event) {
     if (narancsOn == true) {
         let img = document.getElementById("allomasNarancs")
         img.classList.remove("selected");
-        let muhely = new Muhely(x,y,img,100,100,"Narancs");
+        let muhely = new Muhely(x,y,img,muhelySize,muhelySize,"Narancs");
         muhelyek.push(muhely)
         muhely.draw(ctx);
         narancsOn=false;
@@ -488,7 +524,7 @@ c.addEventListener('click', function (event) {
     if (kekOn == true) {
         let img = document.getElementById("allomasKek")
         img.classList.remove("selected");
-        let muhely = new Muhely(x,y,img,100,100,"Kek");
+        let muhely = new Muhely(x,y,img,muhelySize,muhelySize,"Kek");
         muhelyek.push(muhely)
         muhely.draw(ctx);
         kekOn=false;
@@ -507,7 +543,7 @@ c.addEventListener('click', function (event) {
         }
         muhelyek.forEach(muhely => {
             telepulesek.forEach(telepules => {
-                if (touch(telepules.xPos + telepules.width/2, telepules.yPos + telepules.height/2,muhely.xPos,muhely.yPos, muhely.radius) && telepules.igeny==muhely.szin){
+                if (touch(telepules.xPos - telepules.width/2, telepules.yPos - telepules.height/2,muhely.xPos,muhely.yPos, muhely.radius) && telepules.igeny==muhely.szin){
                     //console.log(telepules.igeny,muhely.tipus) 
                     console.log("érintkezik clicknél")
                     telepules.teljesulAzIgeny=true;

@@ -30,14 +30,22 @@ div{
 }
 
 .canvas-container {
-    width: 100%;          /* Szülő elem szélességéhez igazítás */
-    height: 100vh;        /* Teljes viewport magasság */
+    width: 100%;
+    max-width: 1200px;          /* Szülő elem szélességéhez igazítás */
+    height: 800px;        /* Teljes viewport magasság */
+    margin: auto;
         
 }
 
 canvas {
     width: 100%;
     height: 100%;
+    background-image:url(./terkep/alap_terkep.svg);
+    background-position-x: 45%;
+    background-position-y: 40%;
+    background-size: 1700%;
+    /*background-size: cover;*/
+    
     /*display: block; */      /* Görgetősávok elkerülése */
 }
 
