@@ -19,21 +19,23 @@
         <div class="row">
             <div class="col-12 tabla">
                 <div class="canvas-container"><canvas id="jatek"></canvas></div>
-                <div id="keret">
-                    <div class="allomas"><img src="./muhelyek/muhelyZold.png" onclick=zoldCheck(this) alt="" id="allomasZold"></div>
-                    <div class="allomas"> <img src="./muhelyek/muhelyKek.png" onclick=kekCheck(this) alt="" id="allomasKek"></div>
-                    <div class="allomas"><img src="./muhelyek/muhelyNarancs.png" onclick=narancsCheck(this) alt="" id="allomasNarancs"></div>
+                <button type="button" onclick=nyertCheck()>Kész</button>
+                <div id="keret" class="hidden">
+                    <div class="allomas"><img src="./muhelyek/muhelyZold.png"  alt="" id="allomasZold"></div>
+                    <div class="allomas"> <img src="./muhelyek/muhelyKek.png" alt="" id="allomasKek"></div>
+                    <div class="allomas"><img src="./muhelyek/muhelyNarancs.png" alt="" id="allomasNarancs"></div>
                     <div class="allomas"><img src="./terkep/map1.png" id="map1"></div>
-                    <button type="button" onclick=nyertCheck()>Kész</button>
                 </div>
             </div>
         </div>
     </div>
-    <div> <img id="VarosKekD" src="./terkep/NagyVaros_Kek_Done.png" alt=""></div>
-    <div> <img id="VarosNarancsD" src="./terkep/NagyVaros_Narancs_Done.png" alt=""></div>
-    <div> <img id="VarosZoldD" src="./terkep/NagyVaros_Zold_Done.png" alt=""></div>
-    <div> <img id="VarosKek" src="./terkep/NagyVaros_Kek.png" alt=""></div>
-    <div> <img id="VarosNarancs" src="./terkep/NagyVaros_Narancs.png" alt=""></div>
-    <div> <img id="VarosZold" src="./terkep/NagyVaros_Zold.png" alt=""></div>
+    <div class="hidden">
+        <div> <img id="VarosKekD" src="./terkep/NagyVaros_Kek_Done.png" alt=""></div>
+        <div> <img id="VarosNarancsD" src="./terkep/NagyVaros_Narancs_Done.png" alt=""></div>
+        <div> <img id="VarosZoldD" src="./terkep/NagyVaros_Zold_Done.png" alt=""></div>
+        <div> <img id="VarosKek" src="./terkep/NagyVaros_Kek.png" alt=""></div>
+        <div> <img id="VarosNarancs" src="./terkep/NagyVaros_Narancs.png" alt=""></div>
+        <div> <img id="VarosZold" src="./terkep/NagyVaros_Zold.png" alt=""></div>
+    </div>
     <script src="script.js"></script>
 </html>
