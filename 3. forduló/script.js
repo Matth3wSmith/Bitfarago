@@ -144,12 +144,14 @@ function Done(){
     telepulesek.forEach(telepules => {
         if (telepules.teljesulAzIgeny && telepules.igeny=="Kek"){
             telepules.img=varosKekD
+            console.log("kék kész")
         }
         if (telepules.teljesulAzIgeny && telepules.igeny=="Narancs"){
             telepules.img=varosNarancsD
         }
         if (telepules.teljesulAzIgeny && telepules.igeny=="Zold"){
             telepules.img=varosZoldD
+            console.log("Zold kész")
         }
         if (!telepules.teljesulAzIgeny && telepules.igeny=="Kek"){
             telepules.img=varosKek
@@ -490,12 +492,12 @@ c.addEventListener("mousemove",(event)=>{
     if (mouseDown){
         mozgatott.mozgas(ctx,event)
         telepulesek.forEach(telepules => {
-            if (touch(telepules.xPos - telepules.width/2, telepules.yPos + telepules.height/2, mozgatott.xPos,mozgatott.yPos, mozgatott.radius) && mozgatott.szin==telepules.igeny){
+            if (touch(telepules.xPos - telepules.width/2, telepules.yPos - telepules.height/2, mozgatott.xPos,mozgatott.yPos, mozgatott.radius) && mozgatott.szin==telepules.igeny){
                 console.log("érintkezik")
                 telepules.teljesulAzIgeny=true;
             }
-            else if (!touch(telepules.xPos - telepules.width/2, telepules.yPos - telepules.height/2, mozgatott.xPos,mozgatott.yPos, mozgatott.radius)) {
-                telepules.teljesulAzIgeny=false
+            else if (!touch(telepules.xPos - telepules.width/2, telepules.yPos - telepules.height/2, mozgatott.xPos - mozgatott.width/2,mozgatott.yPos - mozgatott.height, mozgatott.radius)&& mozgatott.szin==telepules.igeny) {
+                telepules.teljesulAzIgeny=false;
                 console.log(telepules.teljesulAzIgeny)
             }
         })
@@ -555,20 +557,6 @@ c.addEventListener('click', function (event) {
             }
             menuOpen = !menuOpen; // Menü állapotának váltása
         }
-        muhelyek.forEach(muhely => {
-            telepulesek.forEach(telepules => {
-                if (touch(telepules.xPos - telepules.width/2, telepules.yPos - telepules.height/2,muhely.xPos,muhely.yPos, muhely.radius) && telepules.igeny==muhely.szin){
-                    //console.log(telepules.igeny,muhely.tipus) 
-                    console.log("érintkezik clicknél")
-                    telepules.teljesulAzIgeny=true;
-                    console.log(telepulesek)
-                }
-                else if (!touch(telepules.xPos + telepules.width/2, telepules.yPos + telepules.height/2, mozgatott.xPos,mozgatott.yPos, mozgatott.radius)) {
-                    telepules.teljesulAzIgeny=false
-                    console.log(telepules.teljesulAzIgeny)
-                }
-            })
-        })
         Done()
     
 
