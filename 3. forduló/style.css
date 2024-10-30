@@ -28,6 +28,9 @@ img{
     /*text-shadow: 5px 5px 10px white, -5px -5px 10px white;*/
 }
 
+#elmuKep{
+  margin-top:10px;
+}
 .felirat{
   background-color: white;
   box-shadow: 0px 10px 15px white;
@@ -93,6 +96,7 @@ canvas {
   flex-direction: column;
   align-items: flex-start;
   gap: 2.5vmin;
+  align-items: center;
   
   & > li {
     display: inline-flex;
@@ -119,6 +123,7 @@ canvas {
     }
   }
 }
+
 
 html {
   block-size: 100%;
@@ -151,6 +156,29 @@ a{
 .float-left{
   float: left;
 }
+<<<<<<< HEAD
+
+#sugo{
+  background-color: rgba(48, 48, 48, 0.534);
+  border: 3px solid white;
+  border-radius: 10px;
+}
+.lore{
+  text-align: center;
+  font-family: "Poppins", serif;
+  font-size: 25px;
+  color: white;
+}
+
+#magyaraz{
+    color: rgb(255, 255, 255);
+}
+
+.mkep{
+  height: 200px;
+  width: auto;
+  margin-bottom: 10px;
+=======
 p{
   font-size: 20px;
 }
@@ -161,4 +189,5 @@ h2{
 p, h2 {
   color: white;
   text-shadow: 10px 5px 15px purple;
+>>>>>>> eeb70a1fecf6a5c366c4dec1f82d017cc040c66f
 }
