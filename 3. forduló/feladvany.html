@@ -11,15 +11,22 @@
 </head>
 
 <body id="body">
-    <div>
+    <div class="felirat">
         <img id="elmuKep" src="./muhelyek/warehouse.png">
         <h1 id="elmu">Elektromos Művek</h1>
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-12 tabla">
-                <div class="canvas-container"><canvas id="jatek"></canvas></div>
-                <button type="button" onclick=nyertCheck()>Kész</button>
+            <div class="col-3">
+                <ul class="shadow-button-set">
+                    <li><button type="button" onclick=nyertCheck()>Kész</button></li>
+                    <li><button><a href="menu.html">Főmenü</a></button></li>
+                    <li><button><a href="feladvany.html">Többi feladvány</a></button></li>
+                    <li><button><a href="tutorial.html">Tutorial</a></button></li>
+                </ul>
+            </div>
+            <div class="col-9 tabla">
+                <div class="canvas-container "><canvas id="jatek" class="feladvany1"></canvas></div>
                 <div id="keret" class="hidden">
                     <div class="allomas"><img src="./muhelyek/muhelyZold.png"  alt="" id="allomasZold"></div>
                     <div class="allomas"> <img src="./muhelyek/muhelyKek.png" alt="" id="allomasKek"></div>
@@ -37,6 +44,7 @@
         <div> <img id="VarosNarancs" src="./terkep/NagyVaros_Narancs.png" alt=""></div>
         <div> <img id="VarosZold" src="./terkep/NagyVaros_Zold.png" alt=""></div>
         <div><img id="To" src="./terkep/to.png" alt=""></div>
+        <div><img id="Hegy" src="./terkep/mountain.png" alt=""></div>
     </div>
     <script src="script.js"></script>
     <script>
@@ -46,13 +54,25 @@
         narancsMuhelyMennyiseg=1;
         muhelySize=50
         telepulesek=[];
+        tavak=[];
+        hegyek=[];
         let img = document.getElementById("VarosKek");
         telepulesek.push(new Telepules(673, 565, img, 100, 100, "Kek"));
         img = document.getElementById("VarosNarancs");
         telepulesek.push(new Telepules(270, 439, img, 100, 100, "Narancs"));
         img = document.getElementById("VarosZold");
         telepulesek.push(new Telepules(768, 82, img, 100, 100, "Zold"))
-        
+        img=document.getElementById("To")
+        tavak.push(new To(520,230,img,300,300))
+        img=document.getElementById("Hegy")
+        hegyek.push(new Hegy(990, 172, img, 200, 200))
+        hegyek.push(new Hegy(947, 300, img, 200, 200))
+        hegyek.push(new Hegy(1095, 397, img, 200, 200))
+        hegyek.push(new Hegy(945, 437, img, 200, 200))
+        hegyek.push(new Hegy(1127, 268, img, 200, 200))
+        hegyek.push(new Hegy(1086, 548, img, 200, 200))
+
+
         canvasRajzolas();
 
     </script>
