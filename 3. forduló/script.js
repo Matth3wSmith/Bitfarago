@@ -59,7 +59,7 @@ class Telepules{
     }
     igenyNemTeljesul(ctx){
         ctx.beginPath();
-        ctx.arc(this.xPos+this.width/2,this.yPos+this.height/2,100,0,2*Math.PI)
+        ctx.arc(this.xPos,this.yPos,100,0,2*Math.PI)
         ctx.fillStyle="rgba(255, 0, 0, 0.7)"
         ctx.fill();
         this.draw(ctx);
@@ -160,6 +160,7 @@ function nyertCheck(){
             nincsTeljesitve.push(telepules)
         }
     })
+    console.log(telepulesek)
     if (done==required){
         console.log("nyert")
         alert("GRATULÁLOK TELJESÍTETTED")
@@ -178,15 +179,12 @@ function Done(){
     telepulesek.forEach(telepules => {
         if (telepules.teljesulAzIgeny && telepules.igeny=="Kek"){
             telepules.img=varosKekD
-            console.log("kék kész")
         }
         if (telepules.teljesulAzIgeny && telepules.igeny=="Narancs"){
             telepules.img=varosNarancsD
-            console.log("narancs kész")
         }
         if (telepules.teljesulAzIgeny && telepules.igeny=="Zold"){
             telepules.img=varosZoldD
-            console.log("Zold kész")
         }
         if (!telepules.teljesulAzIgeny && telepules.igeny=="Kek"){
             telepules.img=varosKek
@@ -411,8 +409,6 @@ const keretSize=[100,100]
 const menuMuhelySize = [70,70]
 const menuMuhelyekXY={"kekX":menuWidth/4*2-menuMuhelySize[0]/2,"zoldX":menuWidth/4-menuMuhelySize[0]/2, "narancsX":menuWidth/4*3-menuMuhelySize[0]/2, "Y":menuY-menuHeight/2-menuMuhelySize[1]/2, "kekKeretX":menuWidth/4*2-keretSize[0]/2, "zoldKeretX":menuWidth/4-keretSize[0]/2,"narancsKeretX":menuWidth/4*3-keretSize[0]/2, "keretY":menuY-menuHeight/2-keretSize[1]/2}
 
-var VarosokUgyanOlyan = 2
-
 //#########
 //Feladványtól függően lehet állítani
 var kekMuhelyMennyiseg = 2
@@ -432,42 +428,6 @@ var muhelySize=100;
 
 canvasRajzolas();
 
-
-//Mozgatható terület, vaan mit javítani rajta
-/*
-const contentWidth = 2000;   // Tartalom szélessége
-const contentHeight = 1500;  // Tartalom magassága
-let offsetX = 0;
-let offsetY = 0;
-// Görgetési esemény figyelése
-c.addEventListener('wheel', (event) => {
-    
-
-    offsetX += event.deltaX;
-    offsetY += event.deltaY;
-
-    // Korlátozzuk az eltolást a tartalom méretére
-    offsetX = Math.max(0, Math.min(offsetX, contentWidth - c.width));
-    offsetY = Math.max(0, Math.min(offsetY, contentHeight - c.height));
-
-    drawContent();
-});
-
-// Tartalom kirajzolása az eltolás figyelembevételével
-function drawContent() {
-    ctx.clearRect(0, 0, c.width, c.height); // Canvas törlése
-
-    // Tartalom kirajzolása az eltolás figyelembevételével
-    ctx.save();
-    ctx.translate(-offsetX, -offsetY); // Eltolás alkalmazása
-    // Ide jön a tartalom rajzolása
-    ctx.fillRect(100, 100, 400, 400); // Példa: egy négyzet rajzolása
-    ctx.restore();
-}
-
-// Kezdeti rajzolás
-drawContent();
-*/
 
 
 // Az ablak méretezésekor automatikus canvas átméretezés
@@ -542,14 +502,13 @@ c.addEventListener("mousemove",(event)=>{
     if (mouseDown){
         mozgatott.mozgas(ctx,event)
         telepulesek.forEach(telepules => {
-            if (touch(telepules.xPos - telepules.width/2, telepules.yPos - telepules.height/2, mozgatott.xPos - mozgatott.width/2,mozgatott.yPos - mozgatott.height, mozgatott.radius)&& mozgatott.szin==telepules.igeny ){
+            if (touch(telepules.xPos - telepules.width/2, telepules.yPos - telepules.height/2, mozgatott.xPos - mozgatott.width/2,mozgatott.yPos - mozgatott.height, mozgatott.radius)&& mozgatott.szin==telepules.igeny){
                 console.log("érintkezik")
                 telepules.teljesulAzIgeny=true;
             }
             else if (!touch(telepules.xPos - telepules.width/2, telepules.yPos - telepules.height/2, mozgatott.xPos - mozgatott.width/2,mozgatott.yPos - mozgatott.height, mozgatott.radius)&& mozgatott.szin==telepules.igeny) {
                 telepules.teljesulAzIgeny=false;
                 console.log(telepules.teljesulAzIgeny)
-                
             }
         })
         tavak.forEach(to =>{
