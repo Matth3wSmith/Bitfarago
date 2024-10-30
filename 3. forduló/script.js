@@ -182,6 +182,7 @@ function Done(){
         }
         if (telepules.teljesulAzIgeny && telepules.igeny=="Narancs"){
             telepules.img=varosNarancsD
+            console.log("narancs kész")
         }
         if (telepules.teljesulAzIgeny && telepules.igeny=="Zold"){
             telepules.img=varosZoldD
@@ -410,6 +411,8 @@ const keretSize=[100,100]
 const menuMuhelySize = [70,70]
 const menuMuhelyekXY={"kekX":menuWidth/4*2-menuMuhelySize[0]/2,"zoldX":menuWidth/4-menuMuhelySize[0]/2, "narancsX":menuWidth/4*3-menuMuhelySize[0]/2, "Y":menuY-menuHeight/2-menuMuhelySize[1]/2, "kekKeretX":menuWidth/4*2-keretSize[0]/2, "zoldKeretX":menuWidth/4-keretSize[0]/2,"narancsKeretX":menuWidth/4*3-keretSize[0]/2, "keretY":menuY-menuHeight/2-keretSize[1]/2}
 
+var VarosokUgyanOlyan = 2
+
 //#########
 //Feladványtól függően lehet állítani
 var kekMuhelyMennyiseg = 2
@@ -420,7 +423,7 @@ var varosKek = document.getElementById("VarosKek")
 var varosNarancs = document.getElementById("VarosNarancs")
 var varosZold = document.getElementById("VarosZold")
 var varosKekD = document.getElementById("VarosKekD")
-var varosNarancsD = document.getElementById("VarosNarncsD")
+var varosNarancsD = document.getElementById("VarosNarancsD")
 var varosZoldD = document.getElementById("VarosZoldD")
 var telepulesek = [new Telepules(10,10,varosKek,100,100,"Kek"), new Telepules(800,100,varosZold,100,100,"Zold")]
 var muhelySize=100;
@@ -539,13 +542,14 @@ c.addEventListener("mousemove",(event)=>{
     if (mouseDown){
         mozgatott.mozgas(ctx,event)
         telepulesek.forEach(telepules => {
-            if (touch(telepules.xPos - telepules.width/2, telepules.yPos - telepules.height/2, mozgatott.xPos - mozgatott.width/2,mozgatott.yPos - mozgatott.height, mozgatott.radius)&& mozgatott.szin==telepules.igeny){
+            if (touch(telepules.xPos - telepules.width/2, telepules.yPos - telepules.height/2, mozgatott.xPos - mozgatott.width/2,mozgatott.yPos - mozgatott.height, mozgatott.radius)&& mozgatott.szin==telepules.igeny ){
                 console.log("érintkezik")
                 telepules.teljesulAzIgeny=true;
             }
             else if (!touch(telepules.xPos - telepules.width/2, telepules.yPos - telepules.height/2, mozgatott.xPos - mozgatott.width/2,mozgatott.yPos - mozgatott.height, mozgatott.radius)&& mozgatott.szin==telepules.igeny) {
                 telepules.teljesulAzIgeny=false;
                 console.log(telepules.teljesulAzIgeny)
+                
             }
         })
         tavak.forEach(to =>{
