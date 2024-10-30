@@ -79,13 +79,30 @@ class To{
         //ctx.arc(this.xPos,this.yPos,10,0,Math.PI*2)
         //ctx.stroke()
     }
-    ellenorzes(x,y){
+    ellenorzes(x,y,mozgatott){
         if (x>=this.xPos-this.width/3 && x<=this.xPos+this.width/5*2 &&
             y>=this.yPos-this.height/3 && y<=this.yPos+this.height/5*2){
-                alert("Tóra nem helyezhetsz műhelyt!")
-
+                    alert("Tóra nem helyezhetsz műhelyt!")
+                    let muhelyIndex = muhelyek.indexOf(mozgatott)
+                    muhelyek.splice(muhelyIndex,1)
+                    canvasRajzolas();
+                    if (mozgatott.szin=="Kek"){
+                        kekMuhelyMennyiseg++
+                    }
+                    else if (mozgatott.szin=="Zold"){
+                        zoldMuhelyMennyiseg++
+                    }
+                    else if (mozgatott.szin=="Narancs"){
+                        narancsMuhelyMennyiseg++
+                    }
+                    canvasRajzolas();
+                    return true;
             }
+        else{
+            return false
+        }
     }
+}
     //Automata generáláshoz (ha lesz)
     /*ellenorzes(){
         telepulesek.forEach(telepules => {
@@ -101,7 +118,7 @@ class To{
 
         });
     }*/
-}
+
 class Hegy{
     constructor(x,y,img,width,height){
         this.xPos=x;
@@ -118,12 +135,28 @@ class Hegy{
         //ctx.arc(this.xPos,this.yPos,10,0,Math.PI*2)
         //ctx.stroke()
     }
-    ellenorzes(x,y){
+    ellenorzes(x,y,mozgatott){
         if (x>=this.xPos-this.width/3 && x<=this.xPos+this.width/5*2 &&
             y>=this.yPos-this.height/3 && y<=this.yPos+this.height/5*2){
                 alert("Hegyre nem helyezhetsz műhelyt!")
-
+                let muhelyIndex = muhelyek.indexOf(mozgatott)
+                muhelyek.splice(muhelyIndex,1)
+                canvasRajzolas();
+                if (mozgatott.szin=="Kek"){
+                    kekMuhelyMennyiseg++
+                }
+                else if (mozgatott.szin=="Zold"){
+                    zoldMuhelyMennyiseg++
+                }
+                else if (mozgatott.szin=="Narancs"){
+                    narancsMuhelyMennyiseg++
+                }
+                canvasRajzolas();
+                return true
             }
+        else {
+            return false
+        }
     }
 }
 function kekCheck(img) {
@@ -511,12 +544,20 @@ c.addEventListener("mousemove",(event)=>{
                 console.log(telepules.teljesulAzIgeny)
             }
         })
-        tavak.forEach(to =>{
-            to.ellenorzes(mozgatott.xPos,mozgatott.yPos)
-        })
-        hegyek.forEach(hegy =>{
-            hegy.ellenorzes(mozgatott.xPos,mozgatott.yPos)
-        })
+
+
+        telepulesek.forEach(telepules => {
+            telepules.teljesulAzIgeny=false;
+        });
+
+        telepulesek.forEach(telepules => {
+            muhelyek.forEach(egyMuhely=> {
+                if (touch(telepules.xPos - telepules.width/2, telepules.yPos - telepules.height/2, egyMuhely.xPos - egyMuhely.width/2,egyMuhely.yPos - egyMuhely.height, egyMuhely.radius)&& egyMuhely.szin==telepules.igeny){
+                    console.log("érintkezik")
+                    telepules.teljesulAzIgeny=true;
+                }
+            });
+        });
     }
     Done()
     
@@ -527,7 +568,18 @@ c.addEventListener("mousemove",(event)=>{
 c.addEventListener("mouseup",function (event){
     mouseDown=false;
    
-    
+    if (muhelyek.length>0){
+        for (let i=0;i<tavak.length;i++){
+            if(tavak[i].ellenorzes(mozgatott.xPos,mozgatott.yPos,mozgatott)){
+                break
+            }
+        }
+        for (let i=0;i<hegyek.length;i++){
+            if(hegyek[i].ellenorzes(mozgatott.xPos,mozgatott.yPos,mozgatott)){
+                break
+            }
+        }
+    }       
 })
 
 c.addEventListener('click', function (event) {
