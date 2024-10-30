@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feladvány 2</title>
+    <title>Feladvány 4</title>
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
@@ -53,32 +53,33 @@
         zoldMuhelyMennyiseg=1;
         narancsMuhelyMennyiseg=2;
         muhelySize=50
-        required = 5
+        required = 6
         telepulesek=[];
         tavak=[];
         hegyek=[];
         let img = document.getElementById("VarosKek");
-        telepulesek.push(new Telepules(325, 555, img, 100, 100, "Kek"));
+        telepulesek.push(new Telepules(192 , 270, img, 100, 100, "Kek"));
+        telepulesek.push(new Telepules(25  , 132, img, 100, 100, "Kek"));
+        telepulesek.push(new Telepules(47, 333, img, 100, 100, "Kek"))
         img = document.getElementById("VarosNarancs");
-        telepulesek.push(new Telepules(535 , 248, img, 100, 100, "Narancs"));
-        telepulesek.push(new Telepules(998 , 263, img, 100, 100, "Narancs"))
+        telepulesek.push(new Telepules(365 , 73, img, 100, 100, "Narancs"))
+        telepulesek.push(new Telepules(564, 125, img, 100, 100, "Narancs"))
         img = document.getElementById("VarosZold");
-        telepulesek.push(new Telepules(975  , 529, img, 100, 100, "Zold"))
-        telepulesek.push(new Telepules(1153  , 655, img, 100, 100, "Zold"))
+        telepulesek.push(new Telepules(624, 371, img, 100, 100, "Zold"))
         console.log(telepulesek)
         img=document.getElementById("To")
-        tavak.push(new To(783 ,287,img,300,300))
-        tavak.push(new To(1124  ,81,img,300,300))
+        tavak.push(new To(437,287,img,250,250))
+        tavak.push(new To(191   ,81,img,250,250))
+        tavak.push(new To(1083  ,99,img,250,250))
         img=document.getElementById("Hegy")
-        /*hegyek.push(new Hegy(548 , 109, img, 200, 200))
-        hegyek.push(new Hegy(325 , 227, img, 200, 200))
-        hegyek.push(new Hegy(212 , 393, img, 200, 200))
-        hegyek.push(new Hegy(108 , 235, img, 200, 200))
-        hegyek.push(new Hegy(220 , 85, img, 200, 200))
-        hegyek.push(new Hegy(64 , 83, img, 200, 200))
+        hegyek.push(new Hegy(829  , 14, img, 200, 200))
+        hegyek.push(new Hegy(928  , 187, img, 200, 200))
+        hegyek.push(new Hegy(873  , 151, img, 200, 200))
+        hegyek.push(new Hegy(1021  , 414, img, 200, 200))
+        hegyek.push(new Hegy(1149  , 481, img, 200, 200))
         hegyek.push(new Hegy(99  , 665, img, 200, 200))
         hegyek.push(new Hegy(71 , 525, img, 200, 200))
-        hegyek.push(new Hegy(843 , 66, img, 200, 200))*/
+        hegyek.push(new Hegy(267  , 613, img, 200, 200))
 
 
         canvasRajzolas();
