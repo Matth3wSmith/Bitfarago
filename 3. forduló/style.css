@@ -156,7 +156,6 @@ a{
 .float-left{
   float: left;
 }
-<<<<<<< HEAD
 
 #sugo{
   background-color: rgba(48, 48, 48, 0.534);
@@ -178,16 +177,4 @@ a{
   height: 200px;
   width: auto;
   margin-bottom: 10px;
-=======
-p{
-  font-size: 20px;
-}
-h2{
-  font-size: 50px;
-}
-
-p, h2 {
-  color: white;
-  text-shadow: 10px 5px 15px purple;
->>>>>>> eeb70a1fecf6a5c366c4dec1f82d017cc040c66f
 }
