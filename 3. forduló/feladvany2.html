@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feladvány 1</title>
+    <title>Feladvány 2</title>
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
@@ -21,12 +21,12 @@
                 <ul class="shadow-button-set">
                     <li><button type="button" onclick=nyertCheck()>Kész</button></li>
                     <li><button><a href="menu.html">Főmenü</a></button></li>
-                    <li><button><a href="feladvanyok.html">Többi feladvány</a></button></li>
+                    <li><button><a href="feladvany.html">Többi feladvány</a></button></li>
                     <li><button><a href="tutorial.html">Tutorial</a></button></li>
                 </ul>
             </div>
             <div class="col-9 tabla">
-                <div class="canvas-container "><canvas id="jatek" class="feladvany1"></canvas></div>
+                <div class="canvas-container "><canvas id="jatek" class="feladvany2"></canvas></div>
                 <div id="keret" class="hidden">
                     <div class="allomas"><img src="./muhelyek/muhelyZold.png"  alt="" id="allomasZold"></div>
                     <div class="allomas"> <img src="./muhelyek/muhelyKek.png" alt="" id="allomasKek"></div>
@@ -48,32 +48,37 @@
     </div>
     <script src="script.js"></script>
     <script>
-        //1. feldavány beállításai
-        required=4;
-        kekMuhelyMennyiseg=2;
+        //2. feldavány beállításai 1101 569
+        kekMuhelyMennyiseg=1;
         zoldMuhelyMennyiseg=1;
-        narancsMuhelyMennyiseg=1;
+        narancsMuhelyMennyiseg=2;
         muhelySize=50
-        required = 3
+        required = 5
         telepulesek=[];
         tavak=[];
         hegyek=[];
         let img = document.getElementById("VarosKek");
-        telepulesek.push(new Telepules(673, 565, img, 100, 100, "Kek"));
+        telepulesek.push(new Telepules(325, 555, img, 100, 100, "Kek"));
         img = document.getElementById("VarosNarancs");
-        telepulesek.push(new Telepules(270, 439, img, 100, 100, "Narancs"));
+        telepulesek.push(new Telepules(535 , 248, img, 100, 100, "Narancs"));
+        telepulesek.push(new Telepules(998 , 263, img, 100, 100, "Narancs"))
         img = document.getElementById("VarosZold");
-        telepulesek.push(new Telepules(768, 82, img, 100, 100, "Zold"))
+        telepulesek.push(new Telepules(975  , 529, img, 100, 100, "Zold"))
+        telepulesek.push(new Telepules(1153  , 655, img, 100, 100, "Zold"))
         console.log(telepulesek)
         img=document.getElementById("To")
-        tavak.push(new To(520,230,img,300,300))
+        tavak.push(new To(783 ,287,img,300,300))
+        tavak.push(new To(1124  ,81,img,300,300))
         img=document.getElementById("Hegy")
-        hegyek.push(new Hegy(990, 172, img, 200, 200))
-        hegyek.push(new Hegy(947, 300, img, 200, 200))
-        hegyek.push(new Hegy(1095, 397, img, 200, 200))
-        hegyek.push(new Hegy(945, 437, img, 200, 200))
-        hegyek.push(new Hegy(1127, 268, img, 200, 200))
-        hegyek.push(new Hegy(1086, 548, img, 200, 200))
+        hegyek.push(new Hegy(548 , 109, img, 200, 200))
+        hegyek.push(new Hegy(325 , 227, img, 200, 200))
+        hegyek.push(new Hegy(212 , 393, img, 200, 200))
+        hegyek.push(new Hegy(108 , 235, img, 200, 200))
+        hegyek.push(new Hegy(220 , 85, img, 200, 200))
+        hegyek.push(new Hegy(64 , 83, img, 200, 200))
+        hegyek.push(new Hegy(99  , 665, img, 200, 200))
+        hegyek.push(new Hegy(71 , 525, img, 200, 200))
+        hegyek.push(new Hegy(843 , 66, img, 200, 200))
 
 
         canvasRajzolas();
