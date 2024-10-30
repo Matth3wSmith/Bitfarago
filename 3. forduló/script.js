@@ -59,7 +59,7 @@ class Telepules{
     }
     igenyNemTeljesul(ctx){
         ctx.beginPath();
-        ctx.arc(this.xPos+this.width/2,this.yPos+this.height/2,100,0,2*Math.PI)
+        ctx.arc(this.xPos,this.yPos,100,0,2*Math.PI)
         ctx.fillStyle="rgba(255, 0, 0, 0.7)"
         ctx.fill();
         this.draw(ctx);
@@ -160,6 +160,7 @@ function nyertCheck(){
             nincsTeljesitve.push(telepules)
         }
     })
+    console.log(telepulesek)
     if (done==required){
         console.log("nyert")
         alert("GRATULÁLOK TELJESÍTETTED")
@@ -178,14 +179,12 @@ function Done(){
     telepulesek.forEach(telepules => {
         if (telepules.teljesulAzIgeny && telepules.igeny=="Kek"){
             telepules.img=varosKekD
-            console.log("kék kész")
         }
         if (telepules.teljesulAzIgeny && telepules.igeny=="Narancs"){
             telepules.img=varosNarancsD
         }
         if (telepules.teljesulAzIgeny && telepules.igeny=="Zold"){
             telepules.img=varosZoldD
-            console.log("Zold kész")
         }
         if (!telepules.teljesulAzIgeny && telepules.igeny=="Kek"){
             telepules.img=varosKek
@@ -420,7 +419,7 @@ var varosKek = document.getElementById("VarosKek")
 var varosNarancs = document.getElementById("VarosNarancs")
 var varosZold = document.getElementById("VarosZold")
 var varosKekD = document.getElementById("VarosKekD")
-var varosNarancsD = document.getElementById("VarosNarncsD")
+var varosNarancsD = document.getElementById("VarosNarancsD")
 var varosZoldD = document.getElementById("VarosZoldD")
 var telepulesek = [new Telepules(10,10,varosKek,100,100,"Kek"), new Telepules(800,100,varosZold,100,100,"Zold")]
 var muhelySize=100;
