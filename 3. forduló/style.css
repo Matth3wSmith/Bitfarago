@@ -119,6 +119,7 @@ html {
   padding: 10px;
   display: grid;
   place-content: center;
+  text-align: center;
 }
 a{
     text-decoration: none;
