@@ -103,21 +103,6 @@ class To{
         }
     }
 }
-    //Automata generáláshoz (ha lesz)
-    /*ellenorzes(){
-        telepulesek.forEach(telepules => {
-            //Ha a tó generálás koordinátája érintetne egy várost generáljon új koordinátát
-            if(this.xPos >= telepules.xPos && this.xPos <= telepules.xPos+telepules.width &&
-                this.yPos >= telepules.yPos && this.yPos <= telepules.yPos+telepules.height){ 
-                    this.xPos=Math.random() * c.width
-                    this.yPos=Math.random() * c.height
-                }
-            else{
-                this.draw()
-            }
-
-        });
-    }*/
 
 class Hegy{
     constructor(x,y,img,width,height){
@@ -395,6 +380,14 @@ function touch(elementX, elementY, centerX, centerY, radius){
     return distance <= radius;
 }
 
+function isCircleInSquare(circleX, circleY, radius, squareX, squareY, squareSize) {
+    return (
+        (circleX - radius >= squareX) &&                        // Bal oldal ellenőrzés
+        (circleX + radius <= squareX + squareSize) &&           // Jobb oldal ellenőrzés
+        (circleY - radius >= squareY) &&                        // Felső oldal ellenőrzés
+        (circleY + radius <= squareY + squareSize)              // Alsó oldal ellenőrzés
+    );
+}
 //###########################################################################
 /*Változók*/
 const c = document.getElementById("jatek");
@@ -543,6 +536,7 @@ c.addEventListener("mousemove",(event)=>{
                 telepules.teljesulAzIgeny=false;
                 console.log(telepules.teljesulAzIgeny)
             }
+            
         })
 
 
@@ -629,13 +623,3 @@ c.addEventListener('click', function (event) {
     
 
 }, false);
-
-// POPUP NE HAGYD KI :-)
-function openPopup() {
-    document.getElementById("myPopup").style.display = "block";
-  }
-  
-  function closePopup() {
-    document.getElementById("myPopup").style.display   
-   = "none";
-  }
