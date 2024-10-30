@@ -619,3 +619,12 @@ c.addEventListener('click', function (event) {
 
 }, false);
 
+// POPUP NE HAGYD KI :-)
+function openPopup() {
+    document.getElementById("myPopup").style.display = "block";
+  }
+  
+  function closePopup() {
+    document.getElementById("myPopup").style.display   
+   = "none";
+  }
