@@ -1,5 +1,0 @@
-tutorial gomb
-feladaválasztós menü: nagyjából 3 feladat meg egy random generálós mód
-lehelyezhető műhelyek számának kijelzése
-akkumulátor igények kijelzése
-Sikeres megoldás kijelzése
