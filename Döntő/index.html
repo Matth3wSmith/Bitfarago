@@ -4,15 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kommunikáció</title>
+    <style>
+        .container{
+            display: grid;
+            /*grid-template-columns: auto auto;*/
+        }
+        .Feladat{
+            border: 2px solid black;
+            width: fit-content;
+            padding: 20px;
+            margin: 10px;
+        }
+        p{
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .gombDiv{
+            border: 2px black solid;
+            padding: 10px;
+            margin: 10px;
+            width: fit-content;
+        }
+    </style>
 </head>
 <body>
     <div id="adatok">
-        <button id="GET">GET data</button>
-        <button id="Kesz">Kész beküldése</button>
+        <div class="gombDiv">
+            <button id="ossz" onclick="osszesFeladatKeres()">Összes feladat</button>
+            <button id="kesz">Kész beküldése</button>
+            <button id="f1Btn">Feladat: 1</button>
+        </div>
+        <div class="container">
+            <div class="Feladat">
+                <p>Összes feladat:</p>
+                <span id="osszesFeladat"></span>
+            </div>
+            <div class="Feladat" id="f1">
+                <p>Feladat: 1</p>
+                <div id="valaszok">
+                    <a href="" id="leiras">Feladat leírása</a>
+                </div>
+            </div>
+        </div>
     </div>
-    <div id="valaszok">
-        <a href="" id="leiras">Feladat leírása</a>
-    </div>
+    
 
     <script src="kommunikacio.js"></script>
 </body>

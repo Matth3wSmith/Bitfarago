@@ -1,41 +1,46 @@
 function keresKuldes(method,url,data){
-    const xml=new XMLHttpRequest();
+    const xhttp=new XMLHttpRequest();
 
-    xml.open(method,url);
+    xhttp.open(method,url);
 
-    xml.setRequestHeader("Content-Type","application/json");
+    xhttp.setRequestHeader("Content-Type","application/json");
 
-    xml.onload= () => {
-        if(xml.status>=400){
+    xhttp.onload= () => {
+        if(xhttp.status>=400){
             console.log("Hiba történt")
         }
         else{
             console.log("Sikeres kommunikáció")
-            return xml.response;
+            return xhttp.response;
         }
     };
 
-    xml.send(JSON.stringify(data));
+    xhttp.send(JSON.stringify(data));
 }
 function osszesFeladatKeres(){
     //Összes feladat id-je
     data.id="all";
+
     //Kommunikáció
     const valasz=JSON.parse(keresKuldes("POST","url",data));
+
     //Kiíratás a html-be
-    const valaszokDiv=document.getElementById("valaszok");
+    const valaszokDiv=document.getElementById("osszesFeladat");
     valaszokDiv.innerHTML+="<p>"+String(valasz)+"</p>";
 
     //####################################################
-    
 }
 
 function feladatKeres(){
     //Itt adhatod meg hányadik feladatot kérje
     data.id="1"
+
     //Kommunikáció, valasz változóba a szerver válasza található
     url="";
-    const valasz = JSON.parse(keresKuldes("POST",url,data));
+    const valasz = keresKuldes("POST",url,data);
+    console.log("Ezt mentsd el egy txt-be a feladat leírással együtt:",valasz)
+    valasz=JSON.parse(valasz)
+
     //Kiíratás a html-be
     const valaszokDiv=document.getElementById("valaszok");
     valaszokDiv.innerHTML+="<p>"+String(valasz.data)+"</p>";
@@ -55,11 +60,12 @@ function feladatKeres(){
 
 function feladatMegoldasKuldes(){
     const valasz = JSON.parse(keresKuldes("POST","url",answer));
+    console.log("A feladat megoldásra küldött válasz:",valasz)
 }
 
 
-const keresButton=document.getElementById("GET");
-const kuldesButton=document.getElementById("Kesz");
+const keresButton=document.getElementById("ossz");
+const kuldesButton=document.getElementById("kesz");
 
 let data={
     id:"",
@@ -73,5 +79,5 @@ let answer={
     original_hash:"",
     answer_data:"",
 };
-/*keresButton.addEventListener("click",kuldes("GET","https://randomuser.me/api/"));
-kuldesButton.addEventListener("click",kuldes("POST","https://randomuser.me/api/",data));*/
+
+
